@@ -230,7 +230,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 				String path = fc.getSelectedFile().getAbsolutePath();
 				if (!path.toLowerCase().endsWith(".gdi"))
 					return;
-				Graph g = ReadFile.readFileScanner(path);
+				Graph g = FileManager.readFileScanner(path);
 
 				if (k.graph != null) {
 					int result = JOptionPane.showConfirmDialog(null,

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import de.fhswf.utils.Graph;
 
-public class ReadFile {
+public class FileManager {
 
 	public static Graph readFileScanner(String filename) {
 		Graph graph = new Graph(filename);
