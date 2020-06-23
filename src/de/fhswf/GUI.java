@@ -12,10 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
@@ -24,6 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.fhswf.utils.EditorButton;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 
@@ -37,7 +40,10 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 	private JMenu menu, edit, customColors;
 	private JMenuItem selectFile, exitWindow, openWindow, backgroundcolor, graphcolor, fontcolor,
 			overlappingEdgeColor;
-
+	private EditorPanel edPanel;
+	private EditorButton currentSelected;
+	private JLabel pixelSize;
+	
 	private boolean allowCustomColors = false;
 	
 	public GUI(Graph g) {
@@ -49,7 +55,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 	}
 
 	private void initWindow(Graph g, FrameSize size) {
-		setTitle("GDI Projekt");
+		setTitle("Graphen-Editor");
 		if (g != null)
 			setTitle(getTitle() + " - " + g.getPath());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,11 +80,47 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 		getContentPane().setBackground(new Color(51, 51, 51));
 
 		k = new GraphPainter(size);
-		k.setBounds(0, 0, size.width - 7, size.height);
+		k.setBounds(0, 0, size.width - 57, size.height);
 		if (g != null)
 			k.setFile(g);
 		k.setToolTipText("Platzhalter");
 		add(k);
+		
+		edPanel = new EditorPanel();
+		edPanel.setBounds(size.width - 57, 0, 50, size.height);
+		edPanel.setLayout(null);
+		edPanel.setBackground(k.mainColor);
+		add(edPanel);
+		
+		try {
+			EditorButton knotenButton = new EditorButton(
+					new ImageIcon(ImageIO.read(getClass().getResource("resources/icon_knoten.png"))));
+			knotenButton.setBounds(2, 0, 48, 48);
+			knotenButton.setBorderPainted(false);
+			knotenButton.setFocusPainted(false);
+			knotenButton.setContentAreaFilled(false);
+			knotenButton.setToolTipText("Knoten hinzufügen");
+			knotenButton.addActionListener(this);
+			knotenButton.setActionCommand("knotenButton");
+			edPanel.add(knotenButton);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		
+		try {
+			EditorButton kantenButton = new EditorButton(
+					new ImageIcon(ImageIO.read(getClass().getResource("resources/icon_kanten.png"))));
+			kantenButton.setBounds(2, 48, 48, 48);
+			kantenButton.setBorderPainted(false);
+			kantenButton.setFocusPainted(false);
+			kantenButton.setContentAreaFilled(false);
+			kantenButton.setToolTipText("Kanten hinzufügen");
+			kantenButton.addActionListener(this);
+			kantenButton.setActionCommand("kantenButton");
+			edPanel.add(kantenButton);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
 
 		menuBar = new JMenuBar();
 
@@ -93,6 +135,16 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		JMenuItem save = new JMenuItem("Save");
+		save.addActionListener(this);
+		save.setActionCommand("saveFile");
+		menu.add(save);
+		
+		JMenuItem saveAs = new JMenuItem("Save As...");
+		saveAs.addActionListener(this);
+		saveAs.setActionCommand("saveFileAs");
+		menu.add(saveAs);
 
 		try {
 			openWindow = new JMenuItem("New Window", new ImageIcon(ImageIO.read(getClass().getResource("resources/newWindow.png"))));
@@ -198,14 +250,23 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 
 		JMenu knG = new JMenu("Knotengröße");
 		edit.add(knG);
-
-		JSlider slider = new JSlider(50, 150);
+		
+		JPanel pH = new JPanel();
+		
+		
+		JSlider slider = new JSlider(25, 100);
+		slider.setValue(80);
 		slider.setMajorTickSpacing(50);
 		slider.setMinorTickSpacing(10);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		slider.addChangeListener(this);
 		knG.add(slider);
+		
+		pixelSize = new JLabel("in Pixel: 80");
+		pH.add(pixelSize);
+		
+		knG.add(pH);
 
 		menuBar.add(edit);
 
@@ -272,6 +333,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			Color overlappingEdge = Color.RED;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
+			edPanel.setBackground(graphColor);
 			k.fontColor = fontColor;
 			k.overlappingEdge = overlappingEdge;
 			k.repaint();
@@ -284,6 +346,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			Color overlappingEdge = Color.RED;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
+			edPanel.setBackground(graphColor);
 			k.fontColor = fontColor;
 			k.overlappingEdge = overlappingEdge;
 			k.repaint();
@@ -296,18 +359,20 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			Color overlappingEdge = Color.WHITE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
+			edPanel.setBackground(graphColor);
 			k.fontColor = fontColor;
 			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("iceTheme")) {
 			allowCustomColors = false;
 			customColors.setEnabled(allowCustomColors);
-			Color backgroundColor = Color.WHITE;
-			Color graphColor = new Color(128, 255, 255);
-			Color fontColor = Color.WHITE;
-			Color overlappingEdge = Color.BLUE;
+			Color backgroundColor = new Color(13, 27, 42);
+			Color graphColor = new Color(119, 141, 169);
+			Color fontColor = new Color(27, 38, 59);
+			Color overlappingEdge = new Color(65, 90, 119);
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
+			edPanel.setBackground(graphColor);
 			k.fontColor = fontColor;
 			k.overlappingEdge = overlappingEdge;
 			k.repaint();
@@ -320,6 +385,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			Color overlappingEdge = Color.ORANGE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
+			edPanel.setBackground(graphColor);
 			k.fontColor = fontColor;
 			k.overlappingEdge = overlappingEdge;
 			k.repaint();
@@ -338,6 +404,7 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			Color newColor = JColorChooser.showDialog(this, "Choose a Graph Color", Color.WHITE);
 			if (newColor != null) {
 				k.mainColor = newColor;
+				edPanel.setBackground(newColor);
 				k.repaint();
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("fontcolor") && allowCustomColors) {
@@ -373,14 +440,27 @@ public class GUI extends JFrame implements ActionListener, ChangeListener {
 			dispose();
 		} else if (e.getActionCommand().equalsIgnoreCase("reset")) {
 			k.reset();
+		} else if(e.getActionCommand().equalsIgnoreCase("knotenButton")) {
+			changeSelectedEditorButton(e.getSource());
+		} else if(e.getActionCommand().equalsIgnoreCase("kantenButton")) {
+			changeSelectedEditorButton(e.getSource());
 		}
+	}
+	
+	private void changeSelectedEditorButton(Object o) {
+		if(currentSelected != null) {
+			currentSelected.setSelected(false);
+		}
+		currentSelected = (EditorButton) o;
+		currentSelected.setSelected(true);
 	}
 	
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		JSlider js = (JSlider) e.getSource();
 		
-		k.size = (0.0 + js.getValue()) / 100;
+		k.size = js.getValue();
+		pixelSize.setText("in Pixel: " + js.getValue());
 		k.repaint();
 	}
 	

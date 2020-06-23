@@ -31,9 +31,8 @@ public class GraphPainter extends JPanel {
 	public Color backgroundColor = new Color(51, 51, 51), mainColor = Color.WHITE, fontColor = Color.BLACK,
 			overlappingEdge = Color.RED;
 	
-	public double size = 1.0;
+	public int size = 80;
 	private FrameSize fSize;
-	private int iD = 80;
 	private int currentCircle = 0;
 
 	public GraphPainter() {
@@ -62,24 +61,9 @@ public class GraphPainter extends JPanel {
 		
 		if(g == null) return;
 
-		iD = 80;
 		float degreeC = 360f;
 		knotList.clear();
 		edgeList.clear();
-		
-		if(g.getAmountKnots() > 55) {
-			iD -= (int) (1.9 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		} else if(g.getAmountKnots() > 45) {
-			iD -= (int) (1.9 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		} else if(g.getAmountKnots() > 35) {
-			iD -= (int) (1.9 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		} else if(g.getAmountKnots() > 25) {
-			iD -= (int) (1.7 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		} else if(g.getAmountKnots() > 15) {
-			iD -= (int) (1.4 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		} else if (g.getAmountKnots() > 4) {
-			iD -= (int) (1.2 * graph.getAmountKnots() * (30.0 / fSize.maxKnoten));
-		}
 		
 		if (g.getAmountKnots() > 1)
 			degreeC = degreeC / g.getAmountKnots();
@@ -124,7 +108,7 @@ public class GraphPainter extends JPanel {
 	}
 
 	public int getInnerDiameter() {
-		return (int) (size * iD);
+		return (int) size;
 	}
 
 	public int getCurrentCircle() {
@@ -181,7 +165,7 @@ public class GraphPainter extends JPanel {
 		g2d.setColor(backgroundColor);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(mainColor);
-
+		
 		if (graph == null) {
 			g2d.setFont(new Font("Serif", Font.BOLD, 20));
 			int width = g2d.getFontMetrics().stringWidth("Kein Graph ausgewählt!");
@@ -199,7 +183,7 @@ public class GraphPainter extends JPanel {
 			return;
 		}
 
-		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * size))));
+		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * ((1.0 + size) / 80)))));
 		for (Kanten k : edgeList) {
 			g2d.setColor(mainColor);
 			for (Kanten k2 : edgeList) {
@@ -215,7 +199,7 @@ public class GraphPainter extends JPanel {
 		}
 
 		int fontSize = (int) ((30.0 - (graph.getAmountKnots() * 0.5  * ((30.0 / fSize.maxKnoten)))));
-		g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * size)));
+		g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * ((1.0 + size) / 80))));
 		int cP = 0;
 		for (Knoten k : knotList) {
 			Point p = k.pos;
