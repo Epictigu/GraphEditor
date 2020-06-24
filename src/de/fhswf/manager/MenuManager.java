@@ -47,7 +47,7 @@ public class MenuManager implements ActionListener, ChangeListener{
 		addMenuItem("Select File", "selectFile", "resources/folder.png");
 		addMenuItem("Save", "saveFile");
 		addMenuItem("Save As...", "saveFileAs");
-		addMenuItem("New Window", "openWindows", "resources/newWindow.png");
+		addMenuItem("New Window", "openWindow", "resources/newWindow.png");
 		addMenuItem("Reset Graph", "reset");
 		menu.addSeparator();
 		addMenuItem("Exit", "exitWindow");

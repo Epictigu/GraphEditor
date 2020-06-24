@@ -23,18 +23,18 @@ public class EditorManager implements ActionListener{
 		edPanel.setBackground(instance.k.mainColor);
 		instance.add(edPanel);
 		
-		addEditorButton("resources/icon_knoten_select.png", true);
-		addEditorButton("resources/icon_knoten.png");
-		addEditorButton("resources/icon_kanten_select.png");
-		addEditorButton("resources/icon_kanten.png");
+		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben", "knotenSelectButton", true);
+		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen", "knotenButton");
+		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen", "kantenSelectButton");
+		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen", "kantenButton");
 	}
 	
-	private void addEditorButton(String iconPath) {
-		addEditorButton(iconPath, false);
+	private void addEditorButton(String iconPath, String tooltip, String actionCommand) {
+		addEditorButton(iconPath, tooltip, actionCommand, false);
 	}
 	
 	private int yMod = 0;
-	private void addEditorButton(String iconPath, boolean selected) {
+	private void addEditorButton(String iconPath, String tooltip, String actionCommand, boolean selected) {
 		try {
 			EditorButton knotenButton = new EditorButton(
 					new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
@@ -43,9 +43,9 @@ public class EditorManager implements ActionListener{
 			knotenButton.setBorderPainted(false);
 			knotenButton.setFocusPainted(false);
 			knotenButton.setContentAreaFilled(false);
-			knotenButton.setToolTipText("Knoten verschieben");
+			knotenButton.setToolTipText(tooltip);
 			knotenButton.addActionListener(this);
-			knotenButton.setActionCommand("knotenSelectButton");
+			knotenButton.setActionCommand(actionCommand);
 			
 			if(selected) {
 				knotenButton.setSelected(true);
