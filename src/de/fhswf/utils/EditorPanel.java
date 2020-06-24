@@ -1,4 +1,4 @@
-package de.fhswf;
+package de.fhswf.utils;
 
 import java.awt.Color;
 import java.awt.Graphics;
