@@ -9,14 +9,18 @@ import javax.swing.ImageIcon;
 
 import de.fhswf.GUI;
 import de.fhswf.utils.EditorButton;
+import de.fhswf.utils.EditorMode;
 import de.fhswf.utils.EditorPanel;
 
 public class EditorManager implements ActionListener{
 	
 	public EditorPanel edPanel;
 	private EditorButton currentSelected;
+	private GUI guiInstance;
 	
 	public void initEditor(GUI instance) {
+		this.guiInstance = instance;
+		
 		edPanel = new EditorPanel();
 		edPanel.setBounds(instance.getWidth() - 57, 0, 50, instance.getHeight() - 50);
 		edPanel.setLayout(null);
@@ -74,12 +78,16 @@ public class EditorManager implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equalsIgnoreCase("knotenButton")) {
 			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.AddKnoten;
 		} else if(e.getActionCommand().equalsIgnoreCase("kantenButton")) {
 			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.AddKante;
 		} else if(e.getActionCommand().equalsIgnoreCase("knotenSelectButton")) {
 			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.SelectKnoten;
 		} else if(e.getActionCommand().equalsIgnoreCase("kantenSelectButton")) {
 			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.SelectKante;
 		}
 	}
 	

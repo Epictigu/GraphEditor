@@ -27,6 +27,7 @@ public class FileManager {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		graph.finalize();
 		return graph;
 	}
 
@@ -66,20 +67,17 @@ public class FileManager {
 
 				graph.init(amountKnots);
 			} else if (array[0].equals("V")) {
-				int indexKnots = Integer.parseInt(array[1]);
 				String name = array[2];
 				for (int i = 3; i < array.length; i++) {
 					name = name + " " + array[i];
 				}
 				name = name.substring(1, name.length() - 1);
 
-				graph.writeToKnotNames(indexKnots, name);
+				graph.addKnoten(name);
 			} else if (array[0].equals("E")) {
-				int beginningLine = Integer.parseInt(array[1]);
-				int endLine = Integer.parseInt(array[2]);
-				// int i = Integer.parseInt(array[1]); Platzhalter
-
-				graph.writeLineToAdjacencyMatrix(beginningLine, endLine);
+				graph.writeLineToAdjacencyMatrix(Integer.parseInt(array[1]),
+						Integer.parseInt(array[2]),
+						Integer.parseInt(array[3]));
 			}
 		}
 	}

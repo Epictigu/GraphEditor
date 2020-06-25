@@ -9,11 +9,10 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
+import de.fhswf.utils.EditorMode;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.GraphMouseAdapter;
@@ -25,8 +24,6 @@ public class GraphPainter extends JPanel {
 	private static final long serialVersionUID = 2L;
 
 	public Graph graph = null;
-	private List<Knoten> knotList = new ArrayList<Knoten>();
-	private List<Kanten> edgeList = new ArrayList<Kanten>();
 
 	public Color backgroundColor = new Color(51, 51, 51), mainColor = Color.WHITE, fontColor = Color.BLACK,
 			overlappingEdge = Color.RED;
@@ -34,7 +31,8 @@ public class GraphPainter extends JPanel {
 	public int size = 80;
 	private FrameSize fSize;
 	private int currentCircle = 0;
-
+	public EditorMode eM = EditorMode.SelectKnoten;
+	
 	public GraphPainter() {
 		this(FrameSize.Small);
 	}
@@ -44,6 +42,7 @@ public class GraphPainter extends JPanel {
 		addMouseListener(gMA);
 		addMouseMotionListener(gMA);
 		this.fSize = fsize;
+		this.graph = new Graph(null);
 	}
 
 	public GraphPainter(Graph g, FrameSize fsize) {
@@ -62,27 +61,13 @@ public class GraphPainter extends JPanel {
 		if(g == null) return;
 
 		float degreeC = 360f;
-		knotList.clear();
-		edgeList.clear();
 		
 		if (g.getAmountKnots() > 1)
 			degreeC = degreeC / g.getAmountKnots();
 
-		for (int i = 1; i <= graph.getAmountKnots(); i++) {
-			knotList.add(new Knoten(addEcke((i - 1) * degreeC), graph.getKnotNames()[i]));
+		for (int i = 0; i < graph.getAmountKnots(); i++) {
+			graph.knotList.get(i).pos = addEcke(i * degreeC);
 		}
-		boolean[][] adjM = graph.getAdjacencyMatrix();
-		for (int i = 1; i <= graph.getAmountKnots(); i++) {
-			for (int j = 1; j <= graph.getAmountKnots(); j++) {
-				if (j != i) {
-					if (adjM[i][j]) {
-						if (i < j || adjM[j][i] == false)
-							edgeList.add(new Kanten(knotList.get(i - 1), knotList.get(j - 1)));
-					}
-				}
-			}
-		}
-
 	}
 	
 	public void reset() {
@@ -94,17 +79,13 @@ public class GraphPainter extends JPanel {
 	public String getToolTipText(MouseEvent event) {
 		int i = getCurrentCircle(event);
 		if (i > 0)
-			return "" + graph.getKnotNames()[i];
+			return "" + graph.knotList.get(i - 1).knotName;
 		return null;
 	}
 
 	@Override
 	public Point getToolTipLocation(MouseEvent event) {
 		return new Point(event.getX() + 10, event.getY() + 10);
-	}
-
-	public List<Knoten> getKnots() {
-		return knotList;
 	}
 
 	public int getInnerDiameter() {
@@ -120,8 +101,8 @@ public class GraphPainter extends JPanel {
 	}
 
 	public int getCurrentCircle(MouseEvent event) {
-		for (int i = 1; i <= knotList.size(); i++) {
-			Point oP = knotList.get(i - 1).pos;
+		for (int i = 1; i <= graph.knotList.size(); i++) {
+			Point oP = graph.knotList.get(i - 1).pos;
 			double d = Math.hypot(event.getX() - (oP.getX() + getInnerDiameter() / 2), event.getY() - (oP.getY() + getInnerDiameter() / 2));
 			if (d < getInnerDiameter() / 2)
 				return i;
@@ -184,9 +165,9 @@ public class GraphPainter extends JPanel {
 		}
 
 		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * ((1.0 + size) / 80)))));
-		for (Kanten k : edgeList) {
+		for (Kanten k : graph.edgeList) {
 			g2d.setColor(mainColor);
-			for (Kanten k2 : edgeList) {
+			for (Kanten k2 : graph.edgeList) {
 				if (k != k2) {
 					if (!(k.k1 == k2.k1 || k.k1 == k2.k2 || k.k2 == k2.k1 || k.k2 == k2.k2)) {
 						if (k.schneidetMit(k2, getInnerDiameter())) {
@@ -201,12 +182,12 @@ public class GraphPainter extends JPanel {
 		int fontSize = (int) ((30.0 - (graph.getAmountKnots() * 0.5  * ((30.0 / fSize.maxKnoten)))));
 		g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * ((1.0 + size) / 80))));
 		int cP = 0;
-		for (Knoten k : knotList) {
+		for (Knoten k : graph.knotList) {
 			Point p = k.pos;
 			cP++;
 			g2d.setColor(mainColor);
 			g2d.fillOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
-			String knotName = graph.getKnotNames()[cP];
+			String knotName = graph.knotList.get(cP - 1).knotName;
 			if (knotName.length() < 4) {
 				g2d.setColor(fontColor);
 				Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);

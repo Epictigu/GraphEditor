@@ -7,6 +7,11 @@ public class Knoten {
 	public Point pos;
 	public String knotName;
 	
+	public Knoten(String name) {
+		pos = null;
+		this.knotName = name;
+	}
+	
 	public Knoten(Point pos, String name) {
 		this.pos = pos;
 		this.knotName = name;
