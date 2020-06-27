@@ -28,6 +28,7 @@ public class GraphPainter extends JPanel {
 	public Color backgroundColor = new Color(51, 51, 51), mainColor = Color.WHITE, fontColor = Color.BLACK,
 			overlappingEdge = Color.RED;
 	
+	public int firstKnotenSel = 0, secondKnotenSel = 0;
 	public int size = 80;
 	private FrameSize fSize;
 	private int currentCircle = 0;
@@ -139,6 +140,11 @@ public class GraphPainter extends JPanel {
 
 	}
 
+	public void resetSelected(){
+		firstKnotenSel = 0; secondKnotenSel = 0;
+		repaint();
+	}
+	
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -187,6 +193,10 @@ public class GraphPainter extends JPanel {
 			cP++;
 			g2d.setColor(mainColor);
 			g2d.fillOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+			if(firstKnotenSel == cP || secondKnotenSel == cP) {
+				g2d.setColor(overlappingEdge);
+				g2d.drawOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+			}
 			String knotName = graph.knotList.get(cP - 1).knotName;
 			if (knotName.length() < 4) {
 				g2d.setColor(fontColor);

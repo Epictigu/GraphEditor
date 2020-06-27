@@ -52,6 +52,13 @@ public class Graph {
 	public void writeToKnotNames(int index, String name) {
 		knotNames[index] = name;
 	}
+	
+	public int getKnotPosInList(Knoten k) {
+		for(int i = 0; i < knotList.size(); i++) {
+			if(k == knotList.get(i)) return i;
+		}
+		return -1;
+	}
 
 	public void writeLineToAdjacencyMatrix(int x, int y, int length) {
 		if(y < x) {
