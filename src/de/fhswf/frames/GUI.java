@@ -1,4 +1,4 @@
-package de.fhswf;
+package de.fhswf.frames;
 
 import java.awt.Color;
 
@@ -6,11 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import de.fhswf.Main;
 import de.fhswf.manager.EditorManager;
 import de.fhswf.manager.MenuManager;
 
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
+import de.fhswf.utils.GraphPainter;
 
 public class GUI extends JFrame{
 

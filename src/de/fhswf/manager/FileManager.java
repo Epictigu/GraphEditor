@@ -1,4 +1,4 @@
-package de.fhswf;
+package de.fhswf.manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;

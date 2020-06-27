@@ -1,4 +1,4 @@
-package de.fhswf;
+package de.fhswf.utils;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -11,13 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
-
-import de.fhswf.utils.EditorMode;
-import de.fhswf.utils.FrameSize;
-import de.fhswf.utils.Graph;
-import de.fhswf.utils.GraphMouseAdapter;
-import de.fhswf.utils.Kanten;
-import de.fhswf.utils.Knoten;
 
 public class GraphPainter extends JPanel {
 

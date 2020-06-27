@@ -3,6 +3,7 @@ package de.fhswf;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhswf.frames.GUI;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 

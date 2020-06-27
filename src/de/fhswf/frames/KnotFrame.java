@@ -15,7 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import de.fhswf.GraphPainter;
+import de.fhswf.utils.GraphPainter;
 import de.fhswf.utils.Kanten;
 import de.fhswf.utils.Knoten;
 

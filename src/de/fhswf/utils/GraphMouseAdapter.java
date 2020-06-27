@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import de.fhswf.GraphPainter;
 import de.fhswf.frames.KnotFrame;
 
 public class GraphMouseAdapter extends MouseAdapter{

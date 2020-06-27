@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import de.fhswf.GUI;
+import de.fhswf.frames.GUI;
 import de.fhswf.utils.EditorButton;
 import de.fhswf.utils.EditorMode;
 import de.fhswf.utils.EditorPanel;

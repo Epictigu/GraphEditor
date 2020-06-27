@@ -23,9 +23,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.fhswf.FileManager;
-import de.fhswf.GUI;
 import de.fhswf.Main;
+import de.fhswf.frames.GUI;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.Themes;
