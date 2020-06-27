@@ -1,9 +1,8 @@
 package de.fhswf;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -31,18 +30,34 @@ public class FileManager {
 		return graph;
 	}
 
-	public static Graph readFileBufferdReader(String filename) throws IOException {
-		Graph graph = new Graph(filename);
-		BufferedReader br = new BufferedReader(new FileReader(filename));
+	public static void writeFile(String path, Graph graph) {
 		try {
-			String line;
-			do {
-				line = br.readLine();
-				decodeLine(line, graph);
-			} while (line != null);
-		} finally {
-			br.close();
+			FileWriter fw = new FileWriter(path);
+			fw.write(encodeGraph(graph));
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public static String encodeGraph(Graph g) {
+		int[][] temp = g.getAdjacencyMatrix();
+
+		String graph = "";
+		// Graph
+		graph = graph + "G " + g.getAmountKnots() + "\n";
+
+		for (int i = 1; i <= g.getAmountKnots(); i++) {
+			// Knoten
+			graph = graph + "V " + i + " \"" + g.knotList.get(i - 1).knotName + "\"" + "\n";
+			for (int j = 1; j <= g.getAmountKnots(); j++) {
+				// Kanten
+				if (temp[i][j] != -1) {
+					graph = graph + "E " + i + " " + j + " " + temp[i][j] + "\n";
+				}
+			}
+		}
+
 		return graph;
 	}
 
@@ -75,8 +90,7 @@ public class FileManager {
 
 				graph.addKnoten(name);
 			} else if (array[0].equals("E")) {
-				graph.writeLineToAdjacencyMatrix(Integer.parseInt(array[1]),
-						Integer.parseInt(array[2]),
+				graph.writeLineToAdjacencyMatrix(Integer.parseInt(array[1]), Integer.parseInt(array[2]),
 						Integer.parseInt(array[3]));
 			}
 		}
