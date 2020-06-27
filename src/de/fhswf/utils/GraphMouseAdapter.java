@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import de.fhswf.frames.EdgeFrame;
 import de.fhswf.frames.KnotFrame;
 
 public class GraphMouseAdapter extends MouseAdapter{
@@ -73,6 +74,30 @@ public class GraphMouseAdapter extends MouseAdapter{
 					JOptionPane.showMessageDialog(null, "Ungültige Kantenlänge angegeben.");
 				}
 			}
+		} else if(gP.eM == EditorMode.SelectKante) {
+			int i = gP.getCurrentCircle(e);
+			if(i > 0) {
+				if(gP.firstKnotenSel == 0) {
+					gP.firstKnotenSel = i;
+					gP.repaint();
+					return;
+				}
+				if(gP.firstKnotenSel == i) return;
+				gP.secondKnotenSel = i;
+				gP.repaint();
+				
+				for(Kanten k : gP.graph.edgeList) {
+					if(k.k1 == gP.graph.knotList.get(i - 1) || k.k2 == gP.graph.knotList.get(i - 1)) {
+						if(k.k1 == gP.graph.knotList.get(gP.firstKnotenSel - 1) || k.k2 == gP.graph.knotList.get(gP.firstKnotenSel - 1)) {
+							new EdgeFrame(gP, k);
+							gP.resetSelected();
+							return;
+						}
+					}
+				}
+				
+				gP.resetSelected();
+			}
 		}
 	}
 	public void mouseReleased(MouseEvent e) {
@@ -96,7 +121,7 @@ public class GraphMouseAdapter extends MouseAdapter{
 		}
 	}
 	public void mouseMoved(MouseEvent e) {
-		if(gP.eM == EditorMode.SelectKnoten || gP.eM == EditorMode.AddKante) {
+		if(gP.eM == EditorMode.SelectKnoten || gP.eM == EditorMode.AddKante || gP.eM == EditorMode.SelectKante) {
 			int i = gP.getCurrentCircle(e);
 			if(i > 0) gP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			else gP.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));

@@ -6,52 +6,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import de.fhswf.utils.GraphPainter;
 import de.fhswf.utils.Kanten;
-import de.fhswf.utils.Knoten;
 
-public class KnotFrame extends JDialog implements ActionListener{
+public class EdgeFrame extends JDialog implements ActionListener{
 	
-	private static final long serialVersionUID = -1867545155496855858L;
-
+	private static final long serialVersionUID = 107265808655190614L;
+	
 	private GraphPainter gP;
-	private Knoten k;
-	private JTextField nameTF;
+	private Kanten k;
+	private JTextField längeTF;
 	
-	public KnotFrame(GraphPainter gP, Knoten k, int id) {
+	public EdgeFrame(GraphPainter gP, Kanten k) {
 		this.gP = gP;
 		this.k = k;
 		setSize(250, 130);
-		setTitle("Knotendetails");
+		setTitle("Kantendetails");
 		setLocationRelativeTo(null);
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(null);
 		setResizable(false);
 		
-		JLabel idL = new JLabel("ID: " + id);
+		JLabel idL = new JLabel("Verlauf: " + (gP.graph.getKnotPosInList(k.k1) + 1) + " - " + (gP.graph.getKnotPosInList(k.k2) + 1));
 		idL.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
 		idL.setBounds(28, 10, 200, 25);
 		add(idL);
 		
-		JLabel nameL = new JLabel("Name: ");
+		JLabel nameL = new JLabel("Länge: ");
 		nameL.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
 		nameL.setBounds(28, 35, 200, 25);
 		add(nameL);
 		
-		nameTF = new JTextField(k.knotName);
-		nameTF.setBounds(75, 35, 80, 25);
-		nameTF.setEditable(false);
-		add(nameTF);
+		längeTF = new JTextField("" + k.länge);
+		längeTF.setBounds(75, 35, 80, 25);
+		längeTF.setEditable(false);
+		add(längeTF);
 		
 		JCheckBox nameCheck = new JCheckBox();
 		nameCheck.setBounds(155, 35, 25, 25);
@@ -60,9 +58,9 @@ public class KnotFrame extends JDialog implements ActionListener{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					nameTF.setEditable(true);
+					längeTF.setEditable(true);
 				} else {
-					nameTF.setEditable(false);
+					längeTF.setEditable(false);
 				}
 			}
 		});
@@ -89,18 +87,17 @@ public class KnotFrame extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equalsIgnoreCase("save")) {
-			k.knotName = nameTF.getText();
-			gP.repaint();
-			dispose();
+			try {
+				int l = Integer.parseInt(längeTF.getText());
+				k.länge = l;
+				gP.repaint();
+				dispose();
+			} catch (NumberFormatException e2) {
+				dispose();
+				JOptionPane.showMessageDialog(null, "Ungültige Länge");
+			}
 		} else if(e.getActionCommand().equalsIgnoreCase("delete")) {
-			List<Kanten> delK = new ArrayList<Kanten>();
-			for(Kanten ka : gP.graph.edgeList) {
-				if(ka.k1 == k || ka.k2 == k) delK.add(ka);
-			}
-			for(Kanten ka : delK) {
-				gP.graph.edgeList.remove(ka);
-			}
-			gP.graph.knotList.remove(k);
+			gP.graph.edgeList.remove(k);
 			gP.repaint();
 			dispose();
 		}

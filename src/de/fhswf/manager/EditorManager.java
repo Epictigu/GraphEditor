@@ -89,6 +89,7 @@ public class EditorManager implements ActionListener{
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.SelectKante;
 		}
+		guiInstance.k.resetSelected();
 	}
 	
 }
