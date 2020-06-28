@@ -30,11 +30,16 @@ public class FileManager {
 		return graph;
 	}
 
-	public static void writeFile(String path, Graph graph) {
+	public static void writeFile(String path, Graph graph, int size) {
 		try {
 			FileWriter fw = new FileWriter(path);
 			fw.write(encodeGraph(graph));
 			fw.close();
+
+			String pathPos = path + "p";
+			FileWriter fwp = new FileWriter(pathPos);
+			fwp.write(writePos(graph, size));
+			fwp.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,8 +62,19 @@ public class FileManager {
 				}
 			}
 		}
-
 		return graph;
+	}
+
+	public static String writePos(Graph g, int size) {
+		String pos = "";
+		pos = pos + size + "\n";
+		for (int i = 1; i <= g.getAmountKnots(); i++) {
+			int x = g.knotList.get(i - 1).pos.x;
+			int y = g.knotList.get(i - 1).pos.y;
+			pos = pos + x + " " + y + "\n";
+		}
+
+		return pos;
 	}
 
 	// Abbildung_22_3.gdi

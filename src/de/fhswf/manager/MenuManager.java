@@ -183,6 +183,7 @@ public class MenuManager implements ActionListener, ChangeListener {
 				String path = fc.getSelectedFile().getAbsolutePath();
 				if (!path.toLowerCase().endsWith(".gdi"))
 					return;
+				guiInstance.k.graph.setPath(path);
 				openGraph(path);
 			}
 
@@ -227,6 +228,29 @@ public class MenuManager implements ActionListener, ChangeListener {
 			guiInstance.dispose();
 		} else if (e.getActionCommand().equalsIgnoreCase("reset")) {
 			guiInstance.k.reset();
+		} else if (e.getActionCommand().equalsIgnoreCase("saveFile")) {
+			if (guiInstance.k.graph.getPath() != null) {
+				FileManager.writeFile(guiInstance.k.graph.getPath(), guiInstance.k.graph, guiInstance.k.size);
+			} else {
+				JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("GDIDatei", "gdi");
+				fc.setFileFilter(filter);
+
+				fc.setCurrentDirectory(new File("."));
+				fc.setDialogTitle("Speicherort wählen");
+				// fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+				int retrival = fc.showSaveDialog(null);
+				if (retrival == JFileChooser.APPROVE_OPTION) {
+					String path = fc.getSelectedFile().getAbsolutePath();
+
+					if (!path.toLowerCase().endsWith(".gdi")) {
+						path = path + ".gdi";
+					}
+
+					FileManager.writeFile(path, guiInstance.k.graph, guiInstance.k.size);
+				}
+			}
 		} else if (e.getActionCommand().equalsIgnoreCase("saveFileAs")) {
 			JFileChooser fc = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("GDIDatei", "gdi");
@@ -244,7 +268,8 @@ public class MenuManager implements ActionListener, ChangeListener {
 					path = path + ".gdi";
 				}
 
-				FileManager.writeFile(path, guiInstance.k.graph);
+				guiInstance.k.graph.setPath(path);
+				FileManager.writeFile(path, guiInstance.k.graph, guiInstance.k.size);
 			}
 		}
 	}

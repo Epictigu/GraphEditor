@@ -78,6 +78,10 @@ public class Graph {
 		return path;
 	}
 
+	public void setPath(String newPath) {
+		path = newPath;
+	}
+
 	public int[][] getAdjacencyMatrix() {
 		int[][] temp = new int[getAmountKnots() + 1][getAmountKnots() + 1];
 		for (int i = 0; i < temp.length; i++) {
