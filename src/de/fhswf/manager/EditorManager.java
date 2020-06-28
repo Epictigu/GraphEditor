@@ -12,37 +12,40 @@ import de.fhswf.utils.EditorButton;
 import de.fhswf.utils.EditorMode;
 import de.fhswf.utils.EditorPanel;
 
-public class EditorManager implements ActionListener{
-	
+public class EditorManager implements ActionListener {
+
 	public EditorPanel edPanel;
 	private EditorButton currentSelected;
 	private GUI guiInstance;
-	
+
 	public void initEditor(GUI instance) {
 		this.guiInstance = instance;
-		
+
 		edPanel = new EditorPanel();
 		edPanel.setBounds(instance.getWidth() - 57, 0, 50, instance.getHeight() - 50);
 		edPanel.setLayout(null);
 		edPanel.setBackground(instance.k.mainColor);
 		instance.add(edPanel);
-		
+
 		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben", "knotenSelectButton", true);
 		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen", "knotenButton");
 		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen", "kantenSelectButton");
 		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen", "kantenButton");
+		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen", "knotenZusammenButton");
+		addEditorButton("resources/icon_knoten_pos.png", "Abstand zweier Knoten", "knotenPosButton");
 	}
-	
+
 	private void addEditorButton(String iconPath, String tooltip, String actionCommand) {
 		addEditorButton(iconPath, tooltip, actionCommand, false);
 	}
-	
+
 	private int yMod = 0;
+
 	private void addEditorButton(String iconPath, String tooltip, String actionCommand, boolean selected) {
 		try {
 			EditorButton knotenButton = new EditorButton(
 					new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
-			
+
 			knotenButton.setBounds(2, yMod, 48, 48);
 			knotenButton.setBorderPainted(false);
 			knotenButton.setFocusPainted(false);
@@ -50,46 +53,51 @@ public class EditorManager implements ActionListener{
 			knotenButton.setToolTipText(tooltip);
 			knotenButton.addActionListener(this);
 			knotenButton.setActionCommand(actionCommand);
-			
-			if(selected) {
+
+			if (selected) {
 				knotenButton.setSelected(true);
-				if(currentSelected != null)
+				if (currentSelected != null)
 					currentSelected.setSelected(false);
 				currentSelected = knotenButton;
 			}
-			
+
 			edPanel.add(knotenButton);
-			yMod+=48;
+			yMod += 48;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	private void changeSelectedEditorButton(Object o) {
-		if(currentSelected != null) {
+		if (currentSelected != null) {
 			currentSelected.setSelected(false);
 		}
 		currentSelected = (EditorButton) o;
 		currentSelected.setSelected(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equalsIgnoreCase("knotenButton")) {
+		if (e.getActionCommand().equalsIgnoreCase("knotenButton")) {
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.AddKnoten;
-		} else if(e.getActionCommand().equalsIgnoreCase("kantenButton")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("kantenButton")) {
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.AddKante;
-		} else if(e.getActionCommand().equalsIgnoreCase("knotenSelectButton")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("knotenSelectButton")) {
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.SelectKnoten;
-		} else if(e.getActionCommand().equalsIgnoreCase("kantenSelectButton")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("kantenSelectButton")) {
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.SelectKante;
+		} else if (e.getActionCommand().equalsIgnoreCase("knotenZusammenButton")) {
+			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.KnotenZusammen;
+		} else if (e.getActionCommand().equalsIgnoreCase("knotenPosButton")) {
+			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.eM = EditorMode.KnotenPos;
 		}
 		guiInstance.k.resetSelected();
 	}
-	
+
 }

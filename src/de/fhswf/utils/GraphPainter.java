@@ -19,10 +19,10 @@ public class GraphPainter extends JPanel {
 	public Graph graph = null;
 
 	public Color backgroundColor = new Color(51, 51, 51), mainColor = Color.WHITE, fontColor = Color.BLACK,
-			overlappingEdge = Color.RED;
+			overlappingEdge = Color.RED, gridColor = new Color(72, 72, 72);
 	
 	public int firstKnotenSel = 0, secondKnotenSel = 0;
-	public int size = 80;
+	public int size = 65;
 	private FrameSize fSize;
 	private int currentCircle = 0;
 	public EditorMode eM = EditorMode.SelectKnoten;
@@ -162,7 +162,15 @@ public class GraphPainter extends JPanel {
 			g2d.drawString("Bitte wenn möglich größeres Fenster öffnen.", getWidth() / 2 - (width2 / 2), getHeight() / 2 + 10);
 			return;
 		}
-
+		
+		g2d.setColor(gridColor);
+		for(int i = 1; i < 12; i++) {
+			g2d.drawLine((int) (i * ((double)(getWidth())/12)), 0, (int) (i * ((double)(getWidth())/12)), getHeight());
+		}
+		for(int i = 1; i < 12; i++) {
+			g2d.drawLine(0, (int) (i * ((double)(getHeight())/12)), getWidth(), (int) (i * ((double)(getHeight())/12)));
+		}
+		
 		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * ((1.0 + size) / 80)))));
 		for (Kanten k : graph.edgeList) {
 			g2d.setColor(mainColor);

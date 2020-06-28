@@ -66,12 +66,18 @@ public class GraphMouseAdapter extends MouseAdapter{
 				String s = JOptionPane.showInputDialog("Kantenlänge:");
 				try {
 					int l = Integer.parseInt(s);
+					if(l < 0) {
+						JOptionPane.showMessageDialog(null, "Ungültige Kantenlänge angegeben. (>=0 erforderlich)");
+						gP.resetSelected();
+						return;
+					}
 					gP.graph.addKante(gP.graph.knotList.get(gP.firstKnotenSel - 1),
 							gP.graph.knotList.get(i - 1), l);
 					gP.resetSelected();
 				} catch(NumberFormatException e2) {
 					gP.firstKnotenSel = 0; gP.secondKnotenSel = 0;
 					JOptionPane.showMessageDialog(null, "Ungültige Kantenlänge angegeben.");
+					gP.resetSelected();
 				}
 			}
 		} else if(gP.eM == EditorMode.SelectKante) {

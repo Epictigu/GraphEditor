@@ -89,6 +89,11 @@ public class EdgeFrame extends JDialog implements ActionListener{
 		if(e.getActionCommand().equalsIgnoreCase("save")) {
 			try {
 				int l = Integer.parseInt(längeTF.getText());
+				if(l < 0) {
+					JOptionPane.showMessageDialog(null, "Ungültige Kantenlänge angegeben. (>=0 erforderlich)");
+					dispose();
+					return;
+				}
 				k.länge = l;
 				gP.repaint();
 				dispose();

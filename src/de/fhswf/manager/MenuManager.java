@@ -76,7 +76,7 @@ public class MenuManager implements ActionListener, ChangeListener {
 		JPanel pH = new JPanel();
 
 		JSlider slider = new JSlider(25, 100);
-		slider.setValue(80);
+		slider.setValue(65);
 		slider.setMajorTickSpacing(50);
 		slider.setMinorTickSpacing(10);
 		slider.setPaintTicks(true);
@@ -195,6 +195,7 @@ public class MenuManager implements ActionListener, ChangeListener {
 			guiInstance.k.mainColor = t.mainColor;
 			guiInstance.k.fontColor = t.fontColor;
 			guiInstance.k.overlappingEdge = t.overlappingColor;
+			guiInstance.k.gridColor = t.gridColor;
 			if (t == Themes.custom)
 				customColors.setEnabled(true);
 			else
