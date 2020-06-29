@@ -69,6 +69,16 @@ public class GUI extends JFrame{
 		setJMenuBar(new MenuManager().initMenu(this));
 
 		setVisible(true);
+		
+		boolean con = true;
+		while(con) {
+			try {
+				Thread.sleep(1000l / 30);
+				repaint();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	

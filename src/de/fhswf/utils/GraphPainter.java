@@ -163,12 +163,14 @@ public class GraphPainter extends JPanel {
 			return;
 		}
 		
+		
+		double sizeMod = (double) (fSize.maxKnoten) / 30.0;
 		g2d.setColor(gridColor);
-		for(int i = 1; i < 12; i++) {
-			g2d.drawLine((int) (i * ((double)(getWidth())/12)), 0, (int) (i * ((double)(getWidth())/12)), getHeight());
+		for(int i = 1; i < 12 * sizeMod; i++) {
+			g2d.drawLine((int) (i * ((double)(getWidth())/12 * (1 / sizeMod))), 0, (int) (i * ((double)(getWidth())/12 * (1 / sizeMod))), getHeight());
 		}
-		for(int i = 1; i < 12; i++) {
-			g2d.drawLine(0, (int) (i * ((double)(getHeight())/12)), getWidth(), (int) (i * ((double)(getHeight())/12)));
+		for(int i = 1; i < 12 * sizeMod; i++) {
+			g2d.drawLine(0, (int) (i * ((double)(getHeight())/12 * (1 / sizeMod))), getWidth(), (int) (i * ((double)(getHeight())/12 * (1 / sizeMod))));
 		}
 		
 		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * ((1.0 + size) / 80)))));
