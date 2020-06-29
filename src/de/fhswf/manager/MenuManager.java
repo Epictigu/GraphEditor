@@ -1,6 +1,5 @@
 package de.fhswf.manager;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,18 +8,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.fhswf.Main;
@@ -29,13 +22,12 @@ import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.Themes;
 
-public class MenuManager implements ActionListener, ChangeListener {
+public class MenuManager implements ActionListener{
 
 	private GUI guiInstance;
 	private JMenuBar menuBar;
-	private JMenu menu, edit, customColors;
+	private JMenu menu, edit;
 	private ButtonGroup group;
-	private JLabel pixelSize;
 
 	public JMenuBar initMenu(GUI f) {
 		guiInstance = f;
@@ -50,46 +42,16 @@ public class MenuManager implements ActionListener, ChangeListener {
 		menu.addSeparator();
 		addMenuItem("Exit", "exitWindow");
 
-		edit = new JMenu("Edit");
-		customColors = new JMenu("Custom Colors");
+		edit = new JMenu("Themes");
 		group = new ButtonGroup();
 
 		for (Themes t : Themes.values()) {
 			addThemeButton(t.buttonText, "theme_" + t.name());
 		}
 
-		edit.add(customColors);
-		customColors.setEnabled(false);
-
-		addCustomColorButton("Backgroundcolor", "custom_1");
-		addCustomColorButton("Graphcolor", "custom_2");
-		addCustomColorButton("Fontcolor", "custom_3");
-		addCustomColorButton("Intersectioncolor", "custom_4");
-
 		menuBar.add(menu);
-		edit.addSeparator();
-		edit.addSeparator();
-
-		JMenu knG = new JMenu("Knotengröße");
-		edit.add(knG);
-
-		JPanel pH = new JPanel();
-
-		JSlider slider = new JSlider(25, 100);
-		slider.setValue(65);
-		slider.setMajorTickSpacing(50);
-		slider.setMinorTickSpacing(10);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		slider.addChangeListener(this);
-		knG.add(slider);
-
-		pixelSize = new JLabel("in Pixel: 80");
-		pH.add(pixelSize);
-
-		knG.add(pH);
-
 		menuBar.add(edit);
+
 		return menuBar;
 	}
 
@@ -124,15 +86,6 @@ public class MenuManager implements ActionListener, ChangeListener {
 		edit.add(theme);
 
 		return theme;
-	}
-
-	private JMenuItem addCustomColorButton(String text, String actionCommand) {
-		JMenuItem jMI = new JMenuItem(text);
-		jMI.addActionListener(this);
-		jMI.setActionCommand(actionCommand);
-
-		customColors.add(jMI);
-		return jMI;
 	}
 
 	private void openNewFrame(Graph g) {
@@ -196,33 +149,10 @@ public class MenuManager implements ActionListener, ChangeListener {
 			guiInstance.k.fontColor = t.fontColor;
 			guiInstance.k.overlappingEdge = t.overlappingColor;
 			guiInstance.k.gridColor = t.gridColor;
-			if (t == Themes.custom)
-				customColors.setEnabled(true);
-			else
-				customColors.setEnabled(false);
+			guiInstance.eM.slider.setBackground(t.mainColor);
 
 			guiInstance.eM.edPanel.setBackground(t.mainColor);
 			guiInstance.k.repaint();
-		} else if (e.getActionCommand().startsWith("custom")) {
-			Color newColor = JColorChooser.showDialog(guiInstance, "Choose a Background Color", new Color(0, 0, 0));
-			if (newColor == null)
-				return;
-			int i = Integer.parseInt(e.getActionCommand().split("_")[1]);
-			switch (i) {
-			case 1:
-				guiInstance.k.backgroundColor = newColor;
-				break;
-			case 2:
-				guiInstance.k.mainColor = newColor;
-				break;
-			case 3:
-				guiInstance.k.fontColor = newColor;
-				break;
-			case 4:
-				guiInstance.k.overlappingEdge = newColor;
-				break;
-			}
-			guiInstance.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
 			openNewFrame(null);
 		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
@@ -273,15 +203,6 @@ public class MenuManager implements ActionListener, ChangeListener {
 				FileManager.writeFile(path, guiInstance.k.graph, guiInstance.k.size);
 			}
 		}
-	}
-
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		JSlider js = (JSlider) e.getSource();
-
-		guiInstance.k.size = js.getValue();
-		pixelSize.setText("in Pixel: " + js.getValue());
-		guiInstance.k.repaint();
 	}
 
 }

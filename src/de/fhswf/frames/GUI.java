@@ -9,7 +9,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import de.fhswf.Main;
 import de.fhswf.manager.EditorManager;
 import de.fhswf.manager.MenuManager;
-
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.GraphPainter;
@@ -20,9 +19,7 @@ public class GUI extends JFrame{
 
 	public GraphPainter k;
 	public EditorManager eM;
-	
-	
-	
+
 	public GUI(Graph g) {
 		initWindow(g, FrameSize.Small);
 	}
@@ -38,9 +35,10 @@ public class GUI extends JFrame{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(size.width, size.height + 50);
 		setResizable(false);
-		setLayout(null);
+		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width, size.height + 50);
+		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width,
+				size.height + 50);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -61,15 +59,14 @@ public class GUI extends JFrame{
 		if (g != null)
 			k.setFile(g);
 		k.setToolTipText("Platzhalter");
-		add(k);
-		
+		getContentPane().add(k);
+
 		eM = new EditorManager();
 		eM.initEditor(this);
-		
+
 		setJMenuBar(new MenuManager().initMenu(this));
 
 		setVisible(true);
 	}
-	
-	
+
 }

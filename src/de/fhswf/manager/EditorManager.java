@@ -6,15 +6,19 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import de.fhswf.frames.GUI;
 import de.fhswf.utils.EditorButton;
 import de.fhswf.utils.EditorMode;
 import de.fhswf.utils.EditorPanel;
 
-public class EditorManager implements ActionListener {
+public class EditorManager implements ActionListener, ChangeListener {
 
 	public EditorPanel edPanel;
+	public JSlider slider;
 	private EditorButton currentSelected;
 	private GUI guiInstance;
 
@@ -33,6 +37,16 @@ public class EditorManager implements ActionListener {
 		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen", "kantenButton");
 		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen", "knotenZusammenButton");
 		addEditorButton("resources/icon_knoten_pos.png", "Abstand zweier Knoten", "knotenPosButton");
+		
+		slider = new JSlider(JSlider.VERTICAL, 25, 100, 65);
+		slider.setMajorTickSpacing(25);
+		slider.setMinorTickSpacing(5);
+		slider.setBackground(guiInstance.k.mainColor);
+		slider.setPaintTicks(true);
+		slider.setBounds(2, yMod, 48, instance.getWidth() - yMod - 51);
+		slider.setPaintLabels(true);
+		slider.addChangeListener(this);
+		edPanel.add(slider);
 	}
 
 	private void addEditorButton(String iconPath, String tooltip, String actionCommand) {
@@ -98,6 +112,15 @@ public class EditorManager implements ActionListener {
 			guiInstance.k.eM = EditorMode.KnotenPos;
 		}
 		guiInstance.k.resetSelected();
+	}
+	
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JSlider js = (JSlider) e.getSource();
+
+		guiInstance.k.size = js.getValue();
+		guiInstance.k.repaint();
 	}
 
 }

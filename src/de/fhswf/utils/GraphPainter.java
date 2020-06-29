@@ -96,10 +96,18 @@ public class GraphPainter extends JPanel {
 
 	public int getCurrentCircle(MouseEvent event) {
 		for (int i = 1; i <= graph.knotList.size(); i++) {
-			Point oP = graph.knotList.get(i - 1).pos;
-			double d = Math.hypot(event.getX() - (oP.getX() + getInnerDiameter() / 2), event.getY() - (oP.getY() + getInnerDiameter() / 2));
-			if (d < getInnerDiameter() / 2)
-				return i;
+			Knoten k = graph.knotList.get(i - 1);
+			Point oP = k.pos;
+
+			if(k.knotType == KnotenType.Kreis) {
+				double d = Math.hypot(event.getX() - (oP.getX() + getInnerDiameter() / 2), event.getY() - (oP.getY() + getInnerDiameter() / 2));
+				if (d < getInnerDiameter() / 2)
+					return i;
+			} else if(k.knotType == KnotenType.Quadrat || k.knotType == KnotenType.GerundetesQuadrat) {
+				if(new CustomRect(getInnerDiameter(), oP).contains(event.getPoint())) {
+					return i;
+				}
+			}
 		}
 		return 0;
 	}
@@ -195,14 +203,33 @@ public class GraphPainter extends JPanel {
 			Point p = k.pos;
 			cP++;
 			g2d.setColor(mainColor);
-			g2d.fillOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+			if(k.main != null) {
+				g2d.setColor(k.main);
+			}
+			if(k.knotType == KnotenType.Kreis) {
+				g2d.fillOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+			} else if(k.knotType == KnotenType.Quadrat) {
+				g2d.fillRect(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+			} else if(k.knotType == KnotenType.GerundetesQuadrat) {
+				g2d.fillRoundRect(p.x, p.y, getInnerDiameter(), getInnerDiameter(), getInnerDiameter() / 2, getInnerDiameter() / 2);
+			}
+			
 			if(firstKnotenSel == cP || secondKnotenSel == cP) {
 				g2d.setColor(overlappingEdge);
-				g2d.drawOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+				if(k.knotType == KnotenType.Kreis) {
+					g2d.drawOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+				} else if(k.knotType == KnotenType.Quadrat) {
+					g2d.drawRect(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+				} else if(k.knotType == KnotenType.GerundetesQuadrat) {
+					g2d.drawRoundRect(p.x, p.y, getInnerDiameter(), getInnerDiameter(), getInnerDiameter() / 2, getInnerDiameter() / 2);
+				}
 			}
 			String knotName = graph.knotList.get(cP - 1).knotName;
 			if (knotName.length() < 4) {
 				g2d.setColor(fontColor);
+				if(k.font != null) {
+					g2d.setColor(k.font);
+				}
 				Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
 				g2d.drawString(knotName, (int) (p.x + getInnerDiameter() / 2 - bounds.getWidth() / 2),
 						(int) (p.y + getInnerDiameter() / 2 + bounds.getHeight() / 4));

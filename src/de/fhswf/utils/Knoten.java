@@ -1,11 +1,15 @@
 package de.fhswf.utils;
 
+import java.awt.Color;
 import java.awt.Point;
 
 public class Knoten {
 	
 	public Point pos;
 	public String knotName;
+	public KnotenType knotType = KnotenType.Kreis;
+	public Color main = null;
+	public Color font = null;
 	
 	public Knoten(String name) {
 		pos = null;
