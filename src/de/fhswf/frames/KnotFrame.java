@@ -24,6 +24,7 @@ import de.fhswf.utils.KnotenType;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 public class KnotFrame extends JDialog implements ActionListener{
 	
@@ -133,6 +134,20 @@ public class KnotFrame extends JDialog implements ActionListener{
 		cB2.setActionCommand("fontColor");
 		getContentPane().add(cB2);
 		
+		JButton btnNewButton = new JButton();
+		btnNewButton.setIcon(new ImageIcon(KnotFrame.class.getResource("/de/fhswf/resources/icon_close.png")));
+		btnNewButton.setBounds(185, 88, 19, 19);
+		btnNewButton.addActionListener(this);
+		btnNewButton.setActionCommand("delMainColor");
+		getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton();
+		btnNewButton_1.setIcon(new ImageIcon(KnotFrame.class.getResource("/de/fhswf/resources/icon_close.png")));
+		btnNewButton_1.setBounds(168, 113, 19, 19);
+		btnNewButton_1.addActionListener(this);
+		btnNewButton_1.setActionCommand("delFontColor");
+		getContentPane().add(btnNewButton_1);
+		
 		repaint();
 		
 		setVisible(true);
@@ -164,6 +179,7 @@ public class KnotFrame extends JDialog implements ActionListener{
 			if(ausgewaehlteFarbe == null) return;
 			k.main = ausgewaehlteFarbe;
 			cB.c = ausgewaehlteFarbe;
+			cB.repaint();
 		} else if(e.getActionCommand().equalsIgnoreCase("fontColor")) {
 			Color c = gP.fontColor;
 			if(k.font != null) c = k.font;
@@ -171,6 +187,15 @@ public class KnotFrame extends JDialog implements ActionListener{
 			if(ausgewaehlteFarbe == null) return;
 			k.font = ausgewaehlteFarbe;
 			cB2.c = ausgewaehlteFarbe;
-		}
+			cB2.repaint();
+		} else if(e.getActionCommand().equalsIgnoreCase("delMainColor")) {
+			k.main = null;
+			cB.c = gP.mainColor;
+			cB.repaint();
+		} else if(e.getActionCommand().equalsIgnoreCase("delFontColor")) {
+			k.font = null;
+			cB2.c = gP.fontColor;
+			cB2.repaint();
+		} 
 	}
 }
