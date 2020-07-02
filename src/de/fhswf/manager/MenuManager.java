@@ -2,12 +2,15 @@ package de.fhswf.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +29,7 @@ public class MenuManager implements ActionListener{
 
 	private GUI guiInstance;
 	private JMenuBar menuBar;
-	private JMenu menu, edit;
+	private JMenu menu, edit, settings;
 	private ButtonGroup group;
 
 	public JMenuBar initMenu(GUI f) {
@@ -43,14 +46,37 @@ public class MenuManager implements ActionListener{
 		addMenuItem("Exit", "exitWindow");
 
 		edit = new JMenu("Themes");
+		settings = new JMenu("Settings");
 		group = new ButtonGroup();
 
 		for (Themes t : Themes.values()) {
 			addThemeButton(t.buttonText, "theme_" + t.name());
 		}
-
+		
+		JCheckBoxMenuItem tV = new JCheckBoxMenuItem("Knotennamen anzeigen");
+		tV.setSelected(true);
+		tV.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				guiInstance.k.tV = tV.isSelected();
+				guiInstance.k.repaint();
+			}
+		});
+		settings.add(tV);
+		
+		JCheckBoxMenuItem lV = new JCheckBoxMenuItem("Kantenlänge anzeigen");
+		lV.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				guiInstance.k.lV = lV.isSelected();
+				guiInstance.k.repaint();
+			}
+		});
+		settings.add(lV);
+		
 		menuBar.add(menu);
 		menuBar.add(edit);
+		menuBar.add(settings);
 
 		return menuBar;
 	}

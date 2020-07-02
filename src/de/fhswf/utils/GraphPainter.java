@@ -29,6 +29,9 @@ public class GraphPainter extends JPanel {
 	public EditorMode eM = EditorMode.SelectKnoten;
 	public Map<Knoten, Integer> bfs = null;
 	
+	public boolean tV = true;
+	public boolean lV = false;
+	
 	public GraphPainter() {
 		this(FrameSize.Small);
 	}
@@ -190,6 +193,7 @@ public class GraphPainter extends JPanel {
 			g2d.drawLine(0, (int) (i * ((double)(getHeight())/12 * (1 / sizeMod))), getWidth(), (int) (i * ((double)(getHeight())/12 * (1 / sizeMod))));
 		}
 		
+		int fontSize = (int) ((30.0 - (graph.getAmountKnots() * 0.5  * ((30.0 / fSize.maxKnoten)))));
 		g2d.setStroke(new BasicStroke((float) (((2.5f - ((0f + graph.getAmountKnots()) / 20f * (30f / fSize.maxKnoten))) * ((1.0 + size) / 80)))));
 		for (Kanten k : graph.edgeList) {
 			g2d.setColor(mainColor);
@@ -203,8 +207,17 @@ public class GraphPainter extends JPanel {
 				}
 			}
 			drawKante(g2d, k);
+			if(lV) {
+				g2d.setColor(mainColor);
+				g2d.setFont(new Font("Serif", Font.BOLD, (int) ((fontSize * (1.0 + getInnerDiameter()) / 80) / 2)));
+				int xDis = (k.k2.pos.x - k.k1.pos.x + getInnerDiameter()) / 2;
+				int yDis = (k.k2.pos.y - k.k1.pos.y + getInnerDiameter()) / 2;
+				System.out.println((xDis - getInnerDiameter() / 2) + " | " + (yDis - getInnerDiameter() / 2));
+				g2d.drawString("" + k.länge,
+						(int) (k.k1.pos.x + xDis + ((xDis - getInnerDiameter() / 2)) /9),
+						(int) (k.k1.pos.y + yDis + ((yDis - getInnerDiameter() / 2)) /9));
+			}
 		}
-		int fontSize = (int) ((30.0 - (graph.getAmountKnots() * 0.5  * ((30.0 / fSize.maxKnoten)))));
 		int cP = 0;
 		for (Knoten k : graph.knotList) {
 			g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * ((1.0 + getInnerDiameter(k)) / 80))));
@@ -245,9 +258,15 @@ public class GraphPainter extends JPanel {
 				if(k.font != null) {
 					g2d.setColor(k.font);
 				}
-				Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
-				g2d.drawString(knotName, (int) (p.x + getInnerDiameter(k) / 2 - bounds.getWidth() / 2),
-						(int) (p.y + getInnerDiameter(k) / 2 + bounds.getHeight() / 4));
+				if(tV) {
+					Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
+					g2d.drawString(knotName, (int) (p.x + getInnerDiameter(k) / 2 - bounds.getWidth() / 2),
+							(int) (p.y + getInnerDiameter(k) / 2 + bounds.getHeight() / 4));
+				} else if(!knotName.equalsIgnoreCase(graph.knotList.get(cP-1).knotName)) {
+					Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
+					g2d.drawString(knotName, (int) (p.x + getInnerDiameter(k) / 2 - bounds.getWidth() / 2),
+							(int) (p.y + getInnerDiameter(k) / 2 + bounds.getHeight() / 4));
+				}
 			}
 		}
 
