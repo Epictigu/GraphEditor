@@ -14,6 +14,8 @@ public class Graph {
 	public List<Kanten> edgeList = new ArrayList<Kanten>();
 
 	private String path;
+	public int kSize = 65;
+	public FrameSize fSize = FrameSize.Small;
 
 	public Graph(String path) {
 		this.path = path;

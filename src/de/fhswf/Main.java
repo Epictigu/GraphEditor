@@ -16,14 +16,18 @@ public class Main {
 	}
 
 	public static void openNewFrame(Graph g) {
-		openNewFrame(g, FrameSize.Small);
+		openNewFrame(g, FrameSize.Small, 65);
 	}
 
 	public static void openNewFrame(Graph g, FrameSize size) {
+		openNewFrame(g, size, 65);
+	}
+	
+	public static void openNewFrame(Graph g, FrameSize size, int kSize) {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
-				guiList.add(new GUI(g, size));
+				guiList.add(new GUI(g, size, kSize));
 			}
 		};
 

@@ -24,16 +24,21 @@ public class GUI extends JFrame {
 	public FrameSize frameSize;
 
 	public GUI(Graph g) {
-		initWindow(g, FrameSize.Small);
+		initWindow(g, FrameSize.Small, 65);
 		frameSize = FrameSize.Small;
 	}
 
 	public GUI(Graph g, FrameSize size) {
-		initWindow(g, size);
+		initWindow(g, size, 65);
+		frameSize = size;
+	}
+	
+	public GUI(Graph g, FrameSize size, int kSize) {
+		initWindow(g, size, kSize);
 		frameSize = size;
 	}
 
-	private void initWindow(Graph g, FrameSize size) {
+	private void initWindow(Graph g, FrameSize size, int kSize) {
 		setTitle("Graphen-Editor");
 		if (g != null)
 			setTitle(getTitle() + " - " + g.getPath());
@@ -64,7 +69,7 @@ public class GUI extends JFrame {
 
 		getContentPane().setBackground(new Color(51, 51, 51));
 
-		k = new GraphPainter(size);
+		k = new GraphPainter(size, kSize);
 		k.setBounds(0, 0, size.width - 57, size.height);
 		if (g != null)
 			k.setFile(g);

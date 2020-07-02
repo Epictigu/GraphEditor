@@ -32,11 +32,11 @@ public class GraphPainter extends JPanel {
 	public boolean tV = true;
 	public boolean lV = false;
 	
-	public GraphPainter() {
-		this(FrameSize.Small);
+	public GraphPainter(int kSize) {
+		this(FrameSize.Small, kSize);
 	}
 	
-	public GraphPainter(FrameSize fsize) {
+	public GraphPainter(FrameSize fsize, int kSize) {
 		GraphMouseAdapter gMA = new GraphMouseAdapter(this);
 		addMouseListener(gMA);
 		addMouseMotionListener(gMA);
@@ -44,8 +44,8 @@ public class GraphPainter extends JPanel {
 		this.graph = new Graph(null);
 	}
 
-	public GraphPainter(Graph g, FrameSize fsize) {
-		this(fsize);
+	public GraphPainter(Graph g, FrameSize fsize, int kSize) {
+		this(fsize, kSize);
 		prepGraph(g);
 	}
 
@@ -65,7 +65,9 @@ public class GraphPainter extends JPanel {
 			degreeC = degreeC / g.getAmountKnots();
 
 		for (int i = 0; i < graph.getAmountKnots(); i++) {
-			graph.knotList.get(i).pos = addEcke(i * degreeC);
+			if(graph.knotList.get(i).pos == null) {
+				graph.knotList.get(i).pos = addEcke(i * degreeC);
+			}
 		}
 	}
 	
