@@ -17,6 +17,7 @@ public class DataTable extends JDialog{
 		setTitle("Datentabelle");
 		setBounds(0, 0, 240, 285);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		

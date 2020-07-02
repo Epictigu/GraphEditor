@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.fhswf.Main;
 import de.fhswf.frames.DataTable;
 import de.fhswf.frames.GUI;
+import de.fhswf.frames.ImportFrame;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.Kanten;
@@ -153,20 +154,7 @@ public class MenuManager implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equalsIgnoreCase("selectFile")) {
-			JFileChooser fc = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("GDIDatei", "gdi");
-			fc.setFileFilter(filter);
-
-			fc.setCurrentDirectory(new File("."));
-			fc.setDialogTitle(".gdi Datei auswählen");
-			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-			if (fc.showOpenDialog(guiInstance) == JFileChooser.APPROVE_OPTION) {
-				String path = fc.getSelectedFile().getAbsolutePath();
-				if (!path.toLowerCase().endsWith(".gdi"))
-					return;
-				guiInstance.k.graph.setPath(path);
-				openGraph(path);
-			}
+			ImportFrame iF = new ImportFrame();
 
 		} else if (e.getActionCommand().startsWith("theme")) {
 			String theme = e.getActionCommand().split("_")[1];
