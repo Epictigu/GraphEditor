@@ -18,9 +18,12 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.fhswf.Main;
+import de.fhswf.frames.DataTable;
 import de.fhswf.frames.GUI;
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
+import de.fhswf.utils.Kanten;
+import de.fhswf.utils.Knoten;
 import de.fhswf.utils.Themes;
 
 public class MenuManager implements ActionListener {
@@ -36,6 +39,7 @@ public class MenuManager implements ActionListener {
 		menu = new JMenu("File");
 
 		addMenuItem("Select File", "selectFile", "resources/folder.png");
+		addMenuItem("Datatable", "dataTable");
 		addMenuItem("Save", "saveFile");
 		addMenuItem("Save As...", "saveFileAs");
 		addMenuItem("New Window", "openWindow", "resources/newWindow.png");
@@ -226,6 +230,16 @@ public class MenuManager implements ActionListener {
 
 				guiInstance.k.graph.setPath(path);
 				FileManager.writeFile(path, guiInstance.k.graph, guiInstance.k.size, guiInstance.frameSize);
+			}
+		} else if(e.getActionCommand().equalsIgnoreCase("dataTable")) {
+			DataTable dt = new DataTable();
+			for(int i = 0; i < guiInstance.k.graph.knotList.size(); i++) {
+				Knoten k = guiInstance.k.graph.knotList.get(i);
+				dt.addRowKnoten((i + 1) + "", k.knotName);
+			}
+			for(int i = 0; i < guiInstance.k.graph.edgeList.size(); i++) {
+				Kanten k = guiInstance.k.graph.edgeList.get(i);
+				dt.addRowKanten((i + 1) + "", k.länge + "", (guiInstance.k.graph.getKnotPosInList(k.k1) + 1) + " - " + (guiInstance.k.graph.getKnotPosInList(k.k2) + 1));
 			}
 		}
 	}

@@ -211,13 +211,25 @@ public class GraphPainter extends JPanel {
 			drawKante(g2d, k);
 			if(lV) {
 				g2d.setColor(mainColor);
-				g2d.setFont(new Font("Serif", Font.BOLD, (int) ((fontSize * (1.0 + getInnerDiameter()) / 80) / 2)));
+				g2d.setFont(new Font("Dialog", Font.BOLD, (int) ((fontSize * (1.0 + getInnerDiameter()) / 80) / 1.7)));
+				
 				int xDis = (k.k2.pos.x - k.k1.pos.x + getInnerDiameter()) / 2;
 				int yDis = (k.k2.pos.y - k.k1.pos.y + getInnerDiameter()) / 2;
-				System.out.println((xDis - getInnerDiameter() / 2) + " | " + (yDis - getInnerDiameter() / 2));
+				double xD = (0.0 + xDis - getInnerDiameter() / 2) / 90.0;// if(xD < 0) xD *=-1;
+				double yD = (0.0 + yDis - getInnerDiameter() / 2) / 90.0;// if(yD < 0) yD *=-1;
+				int xMod = 0, yMod = 0;
+				
+				if((xD < 0 && yD < 0) || xD > 0 && yD > 0) {
+					xMod = 10;
+					yMod = -10;
+				} else {
+					xMod = 10;
+					yMod = 10;
+				}
+				
 				g2d.drawString("" + k.länge,
-						(int) (k.k1.pos.x + xDis + ((xDis - getInnerDiameter() / 2)) /9),
-						(int) (k.k1.pos.y + yDis + ((yDis - getInnerDiameter() / 2)) /9));
+						k.k1.pos.x + xDis + xMod,
+						k.k1.pos.y + yDis + yMod);
 			}
 		}
 		int cP = 0;
