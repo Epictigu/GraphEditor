@@ -27,7 +27,7 @@ public class FileManager {
 			scannerGDI.close();
 
 			// GDIP
-			File fileGDIP = new File(path);
+			File fileGDIP = new File(path + "p");
 			Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
 			scannerGDI.useLocale(loc);
 			while (scannerGDIP.hasNextLine()) {
@@ -88,8 +88,18 @@ public class FileManager {
 			int y = g.knotList.get(i - 1).pos.y; // yPosition
 			int knotSize = g.knotList.get(i - 1).size; // Knotengroeﬂe
 			String knotType = g.knotList.get(i - 1).knotType.toString(); // KnotenType
-			int rgbKnot = g.knotList.get(i - 1).main.getRGB(); // KnotenFarbe
-			int rgbFont = g.knotList.get(i - 1).font.getRGB(); // FontFarbe
+			String rgbKnot;
+			try {
+				rgbKnot = "" + g.knotList.get(i - 1).main.getRGB(); // KnotenFarbe
+			} catch (Exception e) {
+				rgbKnot = "Default";
+			}
+			String rgbFont;
+			try {
+				rgbFont = "" + g.knotList.get(i - 1).font.getRGB(); // FontFarbe
+			} catch (Exception e) {
+				rgbFont = "Default";
+			}
 			// x y KnotenGroeﬂe KnotenType KnotenFarbe FontFarbe
 			pos = pos + x + " " + y + " " + knotSize + " " + knotType + " " + rgbKnot + " " + rgbFont + "\n";
 		}
