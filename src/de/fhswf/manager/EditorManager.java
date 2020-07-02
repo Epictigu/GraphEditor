@@ -36,7 +36,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen", "kantenSelectButton");
 		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen", "kantenButton");
 		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen", "knotenZusammenButton");
-		addEditorButton("resources/icon_knoten_pos.png", "Abstand zweier Knoten", "knotenPosButton");
+		addEditorButton("resources/icon_knoten_pos.png", "Breitensuche", "knotenPosButton");
 		
 		slider = new JSlider(JSlider.VERTICAL, 25, 100, 65);
 		slider.setMajorTickSpacing(25);
@@ -59,7 +59,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 		try {
 			EditorButton knotenButton = new EditorButton(
 					new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
-
+			
 			knotenButton.setBounds(2, yMod, 48, 48);
 			knotenButton.setBorderPainted(false);
 			knotenButton.setFocusPainted(false);
@@ -109,6 +109,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 			guiInstance.k.eM = EditorMode.KnotenZusammen;
 		} else if (e.getActionCommand().equalsIgnoreCase("knotenPosButton")) {
 			changeSelectedEditorButton(e.getSource());
+			guiInstance.k.bfs = null;
 			guiInstance.k.eM = EditorMode.KnotenPos;
 		}
 		guiInstance.k.resetSelected();

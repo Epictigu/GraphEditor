@@ -8,7 +8,7 @@ import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 
 public class Main {
-
+	
 	public static List<GUI> guiList = new ArrayList<GUI>();
 
 	public static void main(String[] args) {

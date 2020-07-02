@@ -1,7 +1,9 @@
 package de.fhswf.frames;
 
 import java.awt.Color;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -39,6 +41,11 @@ public class GUI extends JFrame{
 		setLocationRelativeTo(null);
 		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width,
 				size.height + 50);
+		try {
+			setIconImage(ImageIO.read(getClass().getResource("..\\resources\\icon_main_2.png")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

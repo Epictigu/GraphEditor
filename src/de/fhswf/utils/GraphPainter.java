@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -26,6 +27,7 @@ public class GraphPainter extends JPanel {
 	private FrameSize fSize;
 	private int currentCircle = 0;
 	public EditorMode eM = EditorMode.SelectKnoten;
+	public Map<Knoten, Integer> bfs = null;
 	
 	public GraphPainter() {
 		this(FrameSize.Small);
@@ -82,6 +84,13 @@ public class GraphPainter extends JPanel {
 		return new Point(event.getX() + 10, event.getY() + 10);
 	}
 
+	
+	
+	public int getInnerDiameter(Knoten k) {
+		if(k.size != -1)return k.size;
+		return (int) size;
+	}
+	
 	public int getInnerDiameter() {
 		return (int) size;
 	}
@@ -100,11 +109,11 @@ public class GraphPainter extends JPanel {
 			Point oP = k.pos;
 
 			if(k.knotType == KnotenType.Kreis) {
-				double d = Math.hypot(event.getX() - (oP.getX() + getInnerDiameter() / 2), event.getY() - (oP.getY() + getInnerDiameter() / 2));
-				if (d < getInnerDiameter() / 2)
+				double d = Math.hypot(event.getX() - (oP.getX() + getInnerDiameter(k) / 2), event.getY() - (oP.getY() + getInnerDiameter(k) / 2));
+				if (d < getInnerDiameter(k) / 2)
 					return i;
 			} else if(k.knotType == KnotenType.Quadrat || k.knotType == KnotenType.GerundetesQuadrat) {
-				if(new CustomRect(getInnerDiameter(), oP).contains(event.getPoint())) {
+				if(new CustomRect(getInnerDiameter(k), oP).contains(event.getPoint())) {
 					return i;
 				}
 			}
@@ -195,11 +204,10 @@ public class GraphPainter extends JPanel {
 			}
 			drawKante(g2d, k);
 		}
-
 		int fontSize = (int) ((30.0 - (graph.getAmountKnots() * 0.5  * ((30.0 / fSize.maxKnoten)))));
-		g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * ((1.0 + size) / 80))));
 		int cP = 0;
 		for (Knoten k : graph.knotList) {
+			g2d.setFont(new Font("Serif", Font.BOLD, (int) (fontSize * ((1.0 + getInnerDiameter(k)) / 80))));
 			Point p = k.pos;
 			cP++;
 			g2d.setColor(mainColor);
@@ -207,32 +215,39 @@ public class GraphPainter extends JPanel {
 				g2d.setColor(k.main);
 			}
 			if(k.knotType == KnotenType.Kreis) {
-				g2d.fillOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+				g2d.fillOval(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k));
 			} else if(k.knotType == KnotenType.Quadrat) {
-				g2d.fillRect(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+				g2d.fillRect(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k));
 			} else if(k.knotType == KnotenType.GerundetesQuadrat) {
-				g2d.fillRoundRect(p.x, p.y, getInnerDiameter(), getInnerDiameter(), getInnerDiameter() / 2, getInnerDiameter() / 2);
+				g2d.fillRoundRect(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k), getInnerDiameter(k) / 2, getInnerDiameter(k) / 2);
 			}
 			
 			if(firstKnotenSel == cP || secondKnotenSel == cP) {
 				g2d.setColor(overlappingEdge);
 				if(k.knotType == KnotenType.Kreis) {
-					g2d.drawOval(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+					g2d.drawOval(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k));
 				} else if(k.knotType == KnotenType.Quadrat) {
-					g2d.drawRect(p.x, p.y, getInnerDiameter(), getInnerDiameter());
+					g2d.drawRect(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k));
 				} else if(k.knotType == KnotenType.GerundetesQuadrat) {
-					g2d.drawRoundRect(p.x, p.y, getInnerDiameter(), getInnerDiameter(), getInnerDiameter() / 2, getInnerDiameter() / 2);
+					g2d.drawRoundRect(p.x, p.y, getInnerDiameter(k), getInnerDiameter(k), getInnerDiameter(k) / 2, getInnerDiameter(k) / 2);
 				}
 			}
 			String knotName = graph.knotList.get(cP - 1).knotName;
+			if(eM == EditorMode.KnotenPos) {
+				if(bfs != null) {
+					if(bfs.containsKey(k)) {
+						knotName = bfs.get(k) + "";
+					}
+				}
+			}
 			if (knotName.length() < 4) {
 				g2d.setColor(fontColor);
 				if(k.font != null) {
 					g2d.setColor(k.font);
 				}
 				Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
-				g2d.drawString(knotName, (int) (p.x + getInnerDiameter() / 2 - bounds.getWidth() / 2),
-						(int) (p.y + getInnerDiameter() / 2 + bounds.getHeight() / 4));
+				g2d.drawString(knotName, (int) (p.x + getInnerDiameter(k) / 2 - bounds.getWidth() / 2),
+						(int) (p.y + getInnerDiameter(k) / 2 + bounds.getHeight() / 4));
 			}
 		}
 

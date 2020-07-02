@@ -59,6 +59,15 @@ public class Graph {
 		}
 		return -1;
 	}
+	
+	public List<Kanten> getAdjacentKanten(Knoten k){
+		List<Kanten> adj = new ArrayList<Kanten>();
+		
+		for(Kanten ka : edgeList)
+			if(ka.k1 == k || ka.k2 == k) adj.add(ka);
+		
+		return adj;
+	}
 
 	public void writeLineToAdjacencyMatrix(int x, int y, int length) {
 		if (y < x) {

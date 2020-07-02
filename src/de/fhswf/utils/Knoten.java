@@ -10,6 +10,7 @@ public class Knoten {
 	public KnotenType knotType = KnotenType.Kreis;
 	public Color main = null;
 	public Color font = null;
+	public int size = -1;
 	
 	public Knoten(String name) {
 		pos = null;

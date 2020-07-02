@@ -20,7 +20,7 @@ public class GraphMouseAdapter extends MouseAdapter {
 	public GraphMouseAdapter(GraphPainter gP) {
 		this.gP = gP;
 	}
-
+	
 	public void mousePressed(MouseEvent e) {
 		if (gP.eM == EditorMode.SelectKnoten) {
 			int i = gP.getCurrentCircle(e);
@@ -185,6 +185,14 @@ public class GraphMouseAdapter extends MouseAdapter {
 				
 				gP.resetSelected();
 			}
+		} else if(gP.eM == EditorMode.KnotenPos) {
+			int i = gP.getCurrentCircle(e);
+			if(i > 0) {
+				gP.firstKnotenSel = i;
+				Knoten start = gP.graph.knotList.get(i - 1);
+				gP.bfs = Breitensuche.BFS(gP.graph, start);
+				gP.repaint();
+			}
 		}
 	}
 
@@ -216,7 +224,7 @@ public class GraphMouseAdapter extends MouseAdapter {
 
 	public void mouseMoved(MouseEvent e) {
 		if (gP.eM == EditorMode.SelectKnoten || gP.eM == EditorMode.AddKante || gP.eM == EditorMode.SelectKante
-				|| gP.eM == EditorMode.KnotenZusammen) {
+				|| gP.eM == EditorMode.KnotenZusammen || gP.eM == EditorMode.KnotenPos) {
 			int i = gP.getCurrentCircle(e);
 			if (i > 0)
 				gP.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
