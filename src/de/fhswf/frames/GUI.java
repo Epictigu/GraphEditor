@@ -15,19 +15,22 @@ import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 import de.fhswf.utils.GraphPainter;
 
-public class GUI extends JFrame{
+public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	public GraphPainter k;
 	public EditorManager eM;
+	public FrameSize frameSize;
 
 	public GUI(Graph g) {
 		initWindow(g, FrameSize.Small);
+		frameSize = FrameSize.Small;
 	}
 
 	public GUI(Graph g, FrameSize size) {
 		initWindow(g, size);
+		frameSize = size;
 	}
 
 	private void initWindow(Graph g, FrameSize size) {

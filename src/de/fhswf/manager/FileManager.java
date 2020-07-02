@@ -7,22 +7,34 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
+import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 
 public class FileManager {
 
-	public static Graph readFileScanner(String filename) {
-		Graph graph = new Graph(filename);
+	public static Graph readFileScanner(String path) {
+		Graph graph = new Graph(path);
 		try {
-			File file = new File(filename);
+			// GDI
+			File fileGDI = new File(path);
 			Locale loc = new Locale("de", "DE");
-			Scanner scanner = new Scanner(file, "UTF-8");
-			scanner.useLocale(loc);
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				decodeLine(line, graph);
+			Scanner scannerGDI = new Scanner(fileGDI, "UTF-8");
+			scannerGDI.useLocale(loc);
+			while (scannerGDI.hasNextLine()) {
+				String line = scannerGDI.nextLine();
+				decodeGDI(line, graph);
 			}
-			scanner.close();
+			scannerGDI.close();
+
+			// GDIP
+			File fileGDIP = new File(path);
+			Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
+			scannerGDI.useLocale(loc);
+			while (scannerGDIP.hasNextLine()) {
+				String line = scannerGDIP.nextLine();
+				decodeGDIP(line, graph);
+			}
+			scannerGDIP.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -30,7 +42,7 @@ public class FileManager {
 		return graph;
 	}
 
-	public static void writeFile(String path, Graph graph, int size) {
+	public static void writeFile(String path, Graph graph, int size, FrameSize frameSize) {
 		try {
 			FileWriter fw = new FileWriter(path);
 			fw.write(encodeGraph(graph));
@@ -38,7 +50,7 @@ public class FileManager {
 
 			String pathPos = path + "p";
 			FileWriter fwp = new FileWriter(pathPos);
-			fwp.write(writePos(graph, size));
+			fwp.write(writePos(graph, size, frameSize));
 			fwp.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,13 +77,21 @@ public class FileManager {
 		return graph;
 	}
 
-	public static String writePos(Graph g, int size) {
+	public static String writePos(Graph g, int size, FrameSize frameSize) {
 		String pos = "";
+		// groeﬂe Knoten
 		pos = pos + size + "\n";
+		// groeﬂe Fenster
+		pos = pos + frameSize.toString() + "\n";
 		for (int i = 1; i <= g.getAmountKnots(); i++) {
-			int x = g.knotList.get(i - 1).pos.x;
-			int y = g.knotList.get(i - 1).pos.y;
-			pos = pos + x + " " + y + "\n";
+			int x = g.knotList.get(i - 1).pos.x; // xPosition
+			int y = g.knotList.get(i - 1).pos.y; // yPosition
+			int knotSize = g.knotList.get(i - 1).size; // Knotengroeﬂe
+			String knotType = g.knotList.get(i - 1).knotType.toString(); // KnotenType
+			int rgbKnot = g.knotList.get(i - 1).main.getRGB(); // KnotenFarbe
+			int rgbFont = g.knotList.get(i - 1).font.getRGB(); // FontFarbe
+			// x y KnotenGroeﬂe KnotenType KnotenFarbe FontFarbe
+			pos = pos + x + " " + y + " " + knotSize + " " + knotType + " " + rgbKnot + " " + rgbFont + "\n";
 		}
 
 		return pos;
@@ -89,7 +109,7 @@ public class FileManager {
 	// 2.Zahl = Zielknoten der Kante
 	// 3.Zahl = PH fuer gerichtet/ungerichtet
 
-	private static void decodeLine(String line, Graph graph) {
+	private static void decodeGDI(String line, Graph graph) {
 		if (!line.isEmpty()) {
 			String[] array = line.split(" ");
 
@@ -109,6 +129,14 @@ public class FileManager {
 				graph.writeLineToAdjacencyMatrix(Integer.parseInt(array[1]), Integer.parseInt(array[2]),
 						Integer.parseInt(array[3]));
 			}
+		}
+	}
+
+	// TODO
+	private static void decodeGDIP(String line, Graph graph) {
+		if (!line.isEmpty()) {
+			String[] array = line.split(" ");
+
 		}
 	}
 
