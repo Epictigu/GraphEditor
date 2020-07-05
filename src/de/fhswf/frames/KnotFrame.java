@@ -92,7 +92,7 @@ public class KnotFrame extends JDialog implements ActionListener{
 		closeB.addActionListener(this);
 		getContentPane().add(closeB);
 		
-		JButton deleteB = new JButton("Löschen");
+		JButton deleteB = new JButton("LÃ¶schen");
 		deleteB.setBackground(Color.RED);
 		deleteB.setActionCommand("delete");
 		deleteB.addActionListener(this);
@@ -155,7 +155,7 @@ public class KnotFrame extends JDialog implements ActionListener{
 		btnNewButton_1.setActionCommand("delFontColor");
 		getContentPane().add(btnNewButton_1);
 		
-		JLabel lblGre = new JLabel("Größe:");
+		JLabel lblGre = new JLabel("Grï¿½ï¿½e:");
 		lblGre.setFont(new Font("Dialog", Font.PLAIN, 14));
 		lblGre.setBounds(28, 135, 50, 25);
 		getContentPane().add(lblGre);

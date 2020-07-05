@@ -105,14 +105,14 @@ public class FileManager {
 
 	public static String writePos(Graph g, int size, FrameSize frameSize) {
 		String pos = "";
-		// groeﬂe Knoten
+		// groe√üe Knoten
 		pos = pos + size + "\n";
-		// groeﬂe Fenster
+		// groe√üe Fenster
 		pos = pos + frameSize.toString() + "\n";
 		for (int i = 1; i <= g.getAmountKnots(); i++) {
 			int x = g.knotList.get(i - 1).pos.x; // xPosition
 			int y = g.knotList.get(i - 1).pos.y; // yPosition
-			int knotSize = g.knotList.get(i - 1).size; // Knotengroeﬂe
+			int knotSize = g.knotList.get(i - 1).size; // Knotengroe√üe
 			String knotType = g.knotList.get(i - 1).knotType.toString(); // KnotenType
 			String rgbKnot;
 			try {
@@ -126,7 +126,7 @@ public class FileManager {
 			} catch (Exception e) {
 				rgbFont = "Default";
 			}
-			// x y KnotenGroeﬂe KnotenType KnotenFarbe FontFarbe
+			// x y KnotenGroe√üe KnotenType KnotenFarbe FontFarbe
 			pos = pos + x + " " + y + " " + knotSize + " " + knotType + " " + rgbKnot + " " + rgbFont + "\n";
 		}
 
@@ -176,7 +176,7 @@ public class FileManager {
 			// Y Koordinate
 			int y = Integer.parseInt(array[1]);
 			graph.knotList.get(knotIndex).pos = new Point(x, y);
-			// Knotengroeﬂe
+			// KnotengroeÔøΩe
 			int sizeKnot = Integer.parseInt(array[2]);
 			graph.knotList.get(knotIndex).size = sizeKnot;
 			// KnotenType

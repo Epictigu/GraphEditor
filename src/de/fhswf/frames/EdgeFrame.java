@@ -72,7 +72,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 		closeB.setActionCommand("save");
 		closeB.addActionListener(this);
 		add(closeB);
-		JButton deleteB = new JButton("L�schen");
+		JButton deleteB = new JButton("Löschen");
 		deleteB.setBackground(Color.RED);
 		deleteB.setActionCommand("delete");
 		deleteB.addActionListener(this);
@@ -90,7 +90,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 			try {
 				int l = Integer.parseInt(längeTF.getText());
 				if(l < 0) {
-					JOptionPane.showMessageDialog(null, "Ung�ltige Kantenl�nge angegeben. (>=0 erforderlich)");
+					JOptionPane.showMessageDialog(null, "Ungültige Kantenlänge angegeben. (>=0 erforderlich)");
 					dispose();
 					return;
 				}
@@ -99,7 +99,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 				dispose();
 			} catch (NumberFormatException e2) {
 				dispose();
-				JOptionPane.showMessageDialog(null, "Ung�ltige L�nge");
+				JOptionPane.showMessageDialog(null, "Ungültige Länge");
 			}
 		} else if(e.getActionCommand().equalsIgnoreCase("delete")) {
 			gP.graph.edgeList.remove(k);

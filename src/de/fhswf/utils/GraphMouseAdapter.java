@@ -77,11 +77,11 @@ public class GraphMouseAdapter extends MouseAdapter {
 				gP.secondKnotenSel = i;
 				gP.repaint();
 
-				String s = JOptionPane.showInputDialog("Kantenl‰nge:");
+				String s = JOptionPane.showInputDialog("Kantenl√§nge:");
 				try {
 					int l = Integer.parseInt(s);
 					if (l < 0) {
-						JOptionPane.showMessageDialog(null, "Ung¸ltige Kantenl‰nge angegeben. (>=0 erforderlich)");
+						JOptionPane.showMessageDialog(null, "Ung√ºltige Kantenl√§nge angegeben. (>=0 erforderlich)");
 						gP.resetSelected();
 						return;
 					}
@@ -90,7 +90,7 @@ public class GraphMouseAdapter extends MouseAdapter {
 				} catch (NumberFormatException e2) {
 					gP.firstKnotenSel = 0;
 					gP.secondKnotenSel = 0;
-					JOptionPane.showMessageDialog(null, "Ung¸ltige Kantenl‰nge angegeben.");
+					JOptionPane.showMessageDialog(null, "Ung√ºltige Kantenl√§nge angegeben.");
 					gP.resetSelected();
 				}
 			}
@@ -139,7 +139,7 @@ public class GraphMouseAdapter extends MouseAdapter {
 				gP.secondKnotenSel = i;
 				gP.repaint();
 				
-				int c = JOptionPane.showConfirmDialog(null, "Sollen die beiden ausgew‰hlten Knoten zusammengelegt werden?");
+				int c = JOptionPane.showConfirmDialog(null, "Sollen die beiden ausgew√§hlten Knoten zusammengelegt werden?");
 				
 				if(c == 0) {
 					Knoten k = gP.graph.knotList.get(gP.firstKnotenSel - 1);

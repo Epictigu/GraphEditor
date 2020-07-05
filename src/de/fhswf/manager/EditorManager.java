@@ -33,9 +33,9 @@ public class EditorManager implements ActionListener, ChangeListener {
 		instance.add(edPanel);
 
 		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben ALT+1", "knotenSelectButton", true);
-		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen ALT+2", "knotenButton");
-		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen ALT+3", "kantenSelectButton");
-		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen ALT+4", "kantenButton");
+		addEditorButton("resources/icon_knoten.png", "Knoten hinzufÃ¼gen ALT+2", "knotenButton");
+		addEditorButton("resources/icon_kanten_select.png", "Kante auswÃ¤hlen ALT+3", "kantenSelectButton");
+		addEditorButton("resources/icon_kanten.png", "Kante hinzufÃ¼gen ALT+4", "kantenButton");
 		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen ALT+5", "knotenZusammenButton");
 		addEditorButton("resources/icon_knoten_pos.png", "Breitensuche ALT+6", "knotenPosButton");
 

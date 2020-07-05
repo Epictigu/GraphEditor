@@ -91,7 +91,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 		gdipButton.setBounds(223, 38, 20, 20);
 		getContentPane().add(gdipButton);
 
-		JLabel frameSizeL = new JLabel("Framegr\u00F6\u00DFe:");
+		JLabel frameSizeL = new JLabel("Framegr√∂√üe:");
 		frameSizeL.setFont(new Font("Dialog", Font.PLAIN, 13));
 		frameSizeL.setBounds(10, 75, 76, 17);
 		getContentPane().add(frameSizeL);
@@ -102,7 +102,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 		frameSizeB.setBounds(88, 74, 61, 20);
 		getContentPane().add(frameSizeB);
 
-		JLabel knotSizeL = new JLabel("Knotengr\u00F6\u00DFe:");
+		JLabel knotSizeL = new JLabel("Knotengr√∂√üe:");
 		knotSizeL.setFont(new Font("Dialog", Font.PLAIN, 13));
 		knotSizeL.setBounds(10, 100, 84, 17);
 		getContentPane().add(knotSizeL);
@@ -148,7 +148,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 			fc.setFileFilter(filter);
 
 			fc.setCurrentDirectory(new File("."));
-			fc.setDialogTitle(".gdi Datei ausw‰hlen");
+			fc.setDialogTitle(".gdi Datei auswÔøΩhlen");
 			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				String path = fc.getSelectedFile().getAbsolutePath();
@@ -169,7 +169,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 			fc.setFileFilter(filter);
 
 			fc.setCurrentDirectory(new File("."));
-			fc.setDialogTitle(".gdip Datei ausw‰hlen");
+			fc.setDialogTitle(".gdip Datei ausw√§hlen");
 			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				String path = fc.getSelectedFile().getAbsolutePath();
@@ -179,11 +179,11 @@ public class ImportFrame extends JDialog implements ActionListener {
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("import")) {
 			if (gdiPath.getText().equalsIgnoreCase("")) {
-				JOptionPane.showMessageDialog(null, "W‰hle zuerst eine \".gdi\"-Datei aus.");
+				JOptionPane.showMessageDialog(null, "W√§hle zuerst eine \".gdi\"-Datei aus.");
 				return;
 			}
 			if (!(new File(gdiPath.getText()).exists())) {
-				JOptionPane.showMessageDialog(null, "Ung¸ltige Datei ausgew‰hlt.");
+				JOptionPane.showMessageDialog(null, "Ung√ºltige Datei ausgew√§hlt.");
 				return;
 			}
 			Graph g = null;

@@ -42,7 +42,7 @@ public class DataTable extends JDialog{
 		kanten.setModel(new DefaultTableModel(
 			new Object[][] {},
 			new String[] {
-				"ID", "Länge", "Knoten"
+				"ID", "LÃ¤nge", "Knoten"
 			}
 		));
 		kantenPane.setViewportView(kanten);

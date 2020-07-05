@@ -67,7 +67,7 @@ public class MenuManager implements ActionListener {
 		});
 		settings.add(tV);
 
-		JCheckBoxMenuItem lV = new JCheckBoxMenuItem("Kantenl�nge anzeigen");
+		JCheckBoxMenuItem lV = new JCheckBoxMenuItem("Kantenlänge anzeigen");
 		lV.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,8 +118,8 @@ public class MenuManager implements ActionListener {
 	}
 
 	private void openNewFrame(Graph g) {
-		String[] options = { "Klein", "Mittel", "Gro�" };
-		int x = JOptionPane.showOptionDialog(null, "Bitte w�hlen Sie eine Fenstergr��e:", "Fenstergr��e",
+		String[] options = { "Klein", "Mittel", "Groß" };
+		int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		switch (x) {
 		case 0:
@@ -171,7 +171,7 @@ public class MenuManager implements ActionListener {
 				fc.setFileFilter(filter);
 
 				fc.setCurrentDirectory(new File("."));
-				fc.setDialogTitle("Speicherort w�hlen");
+				fc.setDialogTitle("Speicherort wählen");
 				// fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 				int retrival = fc.showSaveDialog(null);
@@ -191,7 +191,7 @@ public class MenuManager implements ActionListener {
 			fc.setFileFilter(filter);
 
 			fc.setCurrentDirectory(new File("."));
-			fc.setDialogTitle("Speicherort w�hlen");
+			fc.setDialogTitle("Speicherort wählen");
 			// fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 			int retrival = fc.showSaveDialog(null);
