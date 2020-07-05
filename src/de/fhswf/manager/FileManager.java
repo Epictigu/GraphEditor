@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -30,23 +34,25 @@ public class FileManager {
 			scannerGDI.close();
 
 			// GDIP
-			File fileGDIP = new File(pathGDIP);
-			if (fileGDIP.exists()) {
-				Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
-				scannerGDI.useLocale(loc);
+			if (pathGDIP != null) {
+				File fileGDIP = new File(pathGDIP);
+				if (fileGDIP.exists()) {
+					Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
+					scannerGDI.useLocale(loc);
 
-				int knotSize = Integer.parseInt(scannerGDIP.nextLine());
-				graph.kSize = knotSize;
-				FrameSize windowSize = FrameSize.valueOf(scannerGDIP.nextLine());
-				graph.fSize = windowSize;
+					int knotSize = Integer.parseInt(scannerGDIP.nextLine());
+					graph.kSize = knotSize;
+					FrameSize windowSize = FrameSize.valueOf(scannerGDIP.nextLine());
+					graph.fSize = windowSize;
 
-				int index = 0;
-				while (scannerGDIP.hasNextLine()) {
-					String line = scannerGDIP.nextLine();
-					decodeGDIP(line, graph, index);
-					index++;
+					int index = 0;
+					while (scannerGDIP.hasNextLine()) {
+						String line = scannerGDIP.nextLine();
+						decodeGDIP(line, graph, index);
+						index++;
+					}
+					scannerGDIP.close();
 				}
-				scannerGDIP.close();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -57,7 +63,14 @@ public class FileManager {
 
 	public static void writeFile(String path, Graph graph, int size, FrameSize frameSize) {
 		try {
-			FileWriter fw = new FileWriter(path);
+			Writer fw = null;
+//			BufferedWriter out = null;
+			try {
+			    fw = new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+//			FileWriter fw = new FileWriter(path);
 			fw.write(encodeGraph(graph));
 			fw.close();
 

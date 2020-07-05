@@ -1,4 +1,4 @@
-package de.fhswf.utils;
+ package de.fhswf.utils;
 
 import java.awt.Color;
 import java.awt.Point;

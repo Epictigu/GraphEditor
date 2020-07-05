@@ -186,18 +186,23 @@ public class ImportFrame extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Ungültige Datei ausgewählt.");
 				return;
 			}
-			Graph g = FileManager.readFileScanner(gdiPath.getText(), gdipPath.getText());
-			g.fSize = Enum.valueOf(FrameSize.class, frameSizeB.getSelectedItem() + "");
-			try {
-				int i = (Integer) knotSizeS.getValue();
-				if (i < 25)
-					i = 25;
-				if (i > 100)
-					i = 100;
-				g.kSize = i;
-			} catch (Exception e2) {
-				e2.printStackTrace();
-				g.kSize = 65;
+			Graph g = null;
+			if(gdipCheck.isSelected()) {
+				g = FileManager.readFileScanner(gdiPath.getText(), gdipPath.getText());
+			} else {
+				g = FileManager.readFileScanner(gdiPath.getText(), null);
+				g.fSize = Enum.valueOf(FrameSize.class, frameSizeB.getSelectedItem() + "");
+				try {
+					int i = (Integer) knotSizeS.getValue();
+					if (i < 25)
+						i = 25;
+					if (i > 100)
+						i = 100;
+					g.kSize = i;
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					g.kSize = 65;
+				}
 			}
 			Main.openNewFrame(g, g.fSize);
 			successful = true;
