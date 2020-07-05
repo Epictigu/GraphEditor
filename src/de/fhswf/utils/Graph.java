@@ -104,8 +104,8 @@ public class Graph {
 		for (Kanten k : edgeList) {
 			int a = getKnotPosInList(k.k1);
 			int b = getKnotPosInList(k.k2);
-			temp[a + 1][b + 1] = k.l‰nge;
-			temp[b + 1][a + 1] = k.l‰nge;
+			temp[a + 1][b + 1] = k.l√§nge;
+			temp[b + 1][a + 1] = k.l√§nge;
 		}
 
 		return temp;

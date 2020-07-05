@@ -23,7 +23,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 	
 	private GraphPainter gP;
 	private Kanten k;
-	private JTextField l‰ngeTF;
+	private JTextField l√§ngeTF;
 	
 	public EdgeFrame(GraphPainter gP, Kanten k) {
 		this.gP = gP;
@@ -41,15 +41,15 @@ public class EdgeFrame extends JDialog implements ActionListener{
 		idL.setBounds(28, 10, 200, 25);
 		add(idL);
 		
-		JLabel nameL = new JLabel("L‰nge: ");
+		JLabel nameL = new JLabel("LÔøΩnge: ");
 		nameL.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
 		nameL.setBounds(28, 35, 200, 25);
 		add(nameL);
 		
-		l‰ngeTF = new JTextField("" + k.l‰nge);
-		l‰ngeTF.setBounds(75, 35, 80, 25);
-		l‰ngeTF.setEditable(false);
-		add(l‰ngeTF);
+		l√§ngeTF = new JTextField("" + k.l√§nge);
+		l√§ngeTF.setBounds(75, 35, 80, 25);
+		l√§ngeTF.setEditable(false);
+		add(l√§ngeTF);
 		
 		JCheckBox nameCheck = new JCheckBox();
 		nameCheck.setBounds(155, 35, 25, 25);
@@ -58,9 +58,9 @@ public class EdgeFrame extends JDialog implements ActionListener{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					l‰ngeTF.setEditable(true);
+					l√§ngeTF.setEditable(true);
 				} else {
-					l‰ngeTF.setEditable(false);
+					l√§ngeTF.setEditable(false);
 				}
 			}
 		});
@@ -72,7 +72,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 		closeB.setActionCommand("save");
 		closeB.addActionListener(this);
 		add(closeB);
-		JButton deleteB = new JButton("Lˆschen");
+		JButton deleteB = new JButton("LÔøΩschen");
 		deleteB.setBackground(Color.RED);
 		deleteB.setActionCommand("delete");
 		deleteB.addActionListener(this);
@@ -88,18 +88,18 @@ public class EdgeFrame extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equalsIgnoreCase("save")) {
 			try {
-				int l = Integer.parseInt(l‰ngeTF.getText());
+				int l = Integer.parseInt(l√§ngeTF.getText());
 				if(l < 0) {
-					JOptionPane.showMessageDialog(null, "Ung¸ltige Kantenl‰nge angegeben. (>=0 erforderlich)");
+					JOptionPane.showMessageDialog(null, "UngÔøΩltige KantenlÔøΩnge angegeben. (>=0 erforderlich)");
 					dispose();
 					return;
 				}
-				k.l‰nge = l;
+				k.l√§nge = l;
 				gP.repaint();
 				dispose();
 			} catch (NumberFormatException e2) {
 				dispose();
-				JOptionPane.showMessageDialog(null, "Ung¸ltige L‰nge");
+				JOptionPane.showMessageDialog(null, "UngÔøΩltige LÔøΩnge");
 			}
 		} else if(e.getActionCommand().equalsIgnoreCase("delete")) {
 			gP.graph.edgeList.remove(k);

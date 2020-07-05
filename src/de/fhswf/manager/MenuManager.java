@@ -67,7 +67,7 @@ public class MenuManager implements ActionListener {
 		});
 		settings.add(tV);
 
-		JCheckBoxMenuItem lV = new JCheckBoxMenuItem("Kantenlänge anzeigen");
+		JCheckBoxMenuItem lV = new JCheckBoxMenuItem("Kantenlï¿½nge anzeigen");
 		lV.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,8 +118,8 @@ public class MenuManager implements ActionListener {
 	}
 
 	private void openNewFrame(Graph g) {
-		String[] options = { "Klein", "Mittel", "Groß" };
-		int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
+		String[] options = { "Klein", "Mittel", "Groï¿½" };
+		int x = JOptionPane.showOptionDialog(null, "Bitte wï¿½hlen Sie eine Fenstergrï¿½ï¿½e:", "Fenstergrï¿½ï¿½e",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 		switch (x) {
 		case 0:
@@ -171,7 +171,7 @@ public class MenuManager implements ActionListener {
 				fc.setFileFilter(filter);
 
 				fc.setCurrentDirectory(new File("."));
-				fc.setDialogTitle("Speicherort wählen");
+				fc.setDialogTitle("Speicherort wï¿½hlen");
 				// fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 				int retrival = fc.showSaveDialog(null);
@@ -191,7 +191,7 @@ public class MenuManager implements ActionListener {
 			fc.setFileFilter(filter);
 
 			fc.setCurrentDirectory(new File("."));
-			fc.setDialogTitle("Speicherort wählen");
+			fc.setDialogTitle("Speicherort wï¿½hlen");
 			// fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 			int retrival = fc.showSaveDialog(null);
@@ -213,7 +213,7 @@ public class MenuManager implements ActionListener {
 			}
 			for (int i = 0; i < guiInstance.k.graph.edgeList.size(); i++) {
 				Kanten k = guiInstance.k.graph.edgeList.get(i);
-				dt.addRowKanten((i + 1) + "", k.länge + "", (guiInstance.k.graph.getKnotPosInList(k.k1) + 1) + " - "
+				dt.addRowKanten((i + 1) + "", k.lÃ¤nge + "", (guiInstance.k.graph.getKnotPosInList(k.k1) + 1) + " - "
 						+ (guiInstance.k.graph.getKnotPosInList(k.k2) + 1));
 			}
 		}

@@ -6,12 +6,12 @@ public class Kanten {
 	
 	public Knoten k1;
 	public Knoten k2;
-	public int l‰nge;
+	public int l√§nge;
 	
-	public Kanten(Knoten k1, Knoten k2, int l‰nge) {
+	public Kanten(Knoten k1, Knoten k2, int l√§nge) {
 		this.k1 = k1;
 		this.k2 = k2;
-		this.l‰nge = l‰nge;
+		this.l√§nge = l√§nge;
 	}
 	
 	public boolean schneidetMit(Kanten k, int iD) {
