@@ -206,7 +206,7 @@ public class GraphMouseAdapter extends MouseAdapter {
 		if (gP.getCurrentCircle() > 0) {
 			int x = e.getX();
 			int y = e.getY();
-			int iR = gP.getInnerDiameter() / 2;
+			int iR = gP.getInnerDiameter(gP.graph.knotList.get(gP.getCurrentCircle() - 1)) / 2;
 
 			if (x < iR)
 				x = iR;

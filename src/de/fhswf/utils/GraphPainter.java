@@ -136,11 +136,11 @@ public class GraphPainter extends JPanel {
 	}
 
 	void drawKante(Graphics2D g2d, Kanten k) {
-		int aL = getInnerDiameter() / 2;
 
 		Point t1 = k.k1.pos;
 		Point t2 = k.k2.pos;
-		g2d.drawLine(t1.x + aL, t1.y + aL, t2.x + aL, t2.y + aL);
+		
+		g2d.drawLine(t1.x + getInnerDiameter(k.k1) / 2, t1.y + getInnerDiameter(k.k1) / 2, t2.x + getInnerDiameter(k.k2) / 2, t2.y + getInnerDiameter(k.k2) / 2);
 	}
 
 	protected Point getPointOnCircle(float degress, int radius) {

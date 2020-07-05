@@ -155,7 +155,7 @@ public class KnotFrame extends JDialog implements ActionListener{
 		btnNewButton_1.setActionCommand("delFontColor");
 		getContentPane().add(btnNewButton_1);
 		
-		JLabel lblGre = new JLabel("Gr��e:");
+		JLabel lblGre = new JLabel("Größe:");
 		lblGre.setFont(new Font("Dialog", Font.PLAIN, 14));
 		lblGre.setBounds(28, 135, 50, 25);
 		getContentPane().add(lblGre);
