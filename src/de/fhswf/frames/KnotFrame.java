@@ -142,14 +142,14 @@ public class KnotFrame extends JDialog implements ActionListener{
 		getContentPane().add(cB2);
 		
 		JButton btnNewButton = new JButton();
-		btnNewButton.setIcon(new ImageIcon(KnotFrame.class.getResource("/de/fhswf/resources/icon_close.png")));
+		btnNewButton.setIcon(new ImageIcon(KnotFrame.class.getResource("/icon_close.png")));
 		btnNewButton.setBounds(185, 88, 19, 19);
 		btnNewButton.addActionListener(this);
 		btnNewButton.setActionCommand("delMainColor");
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton();
-		btnNewButton_1.setIcon(new ImageIcon(KnotFrame.class.getResource("/de/fhswf/resources/icon_close.png")));
+		btnNewButton_1.setIcon(new ImageIcon(KnotFrame.class.getResource("/icon_close.png")));
 		btnNewButton_1.setBounds(168, 113, 19, 19);
 		btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setActionCommand("delFontColor");

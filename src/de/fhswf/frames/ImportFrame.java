@@ -60,7 +60,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 
 		JButton gdiButton = new JButton();
 		try {
-			gdiButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\resources\\icon_folder.png"))));
+			gdiButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/icon_folder.png"))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +82,7 @@ public class ImportFrame extends JDialog implements ActionListener {
 
 		JButton gdipButton = new JButton();
 		try {
-			gdipButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("..\\resources\\icon_folder.png"))));
+			gdipButton.setIcon(new ImageIcon(ImageIO.read(getClass().getResource("/icon_folder.png"))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

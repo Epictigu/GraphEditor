@@ -39,11 +39,11 @@ public class MenuManager implements ActionListener {
 		menuBar = new JMenuBar();
 		menu = new JMenu("File");
 
-		addMenuItem("Select File", "selectFile", "resources/folder.png");
+		addMenuItem("Select File", "selectFile", "folder.png");
 		addMenuItem("Datatable", "dataTable");
 		addMenuItem("Save", "saveFile");
 		addMenuItem("Save As...", "saveFileAs");
-		addMenuItem("New Window", "openWindow", "resources/newWindow.png");
+		addMenuItem("New Window", "openWindow", "newWindow.png");
 		addMenuItem("Reset Graph", "reset");
 		menu.addSeparator();
 		addMenuItem("Exit", "exitWindow");
@@ -92,7 +92,7 @@ public class MenuManager implements ActionListener {
 		JMenuItem jMI = null;
 		if (!iconPath.equalsIgnoreCase("")) {
 			try {
-				jMI = new JMenuItem(text, new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
+				jMI = new JMenuItem(text, new ImageIcon(ImageIO.read(getClass().getResource("/" + iconPath))));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -32,12 +32,12 @@ public class EditorManager implements ActionListener, ChangeListener {
 		edPanel.setBackground(instance.k.mainColor);
 		instance.add(edPanel);
 
-		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben ALT+1", "knotenSelectButton", true);
-		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen ALT+2", "knotenButton");
-		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen ALT+3", "kantenSelectButton");
-		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen ALT+4", "kantenButton");
-		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen ALT+5", "knotenZusammenButton");
-		addEditorButton("resources/icon_knoten_pos.png", "Breitensuche ALT+6", "knotenPosButton");
+		addEditorButton("icon_knoten_select.png", "Knoten verschieben ALT+1", "knotenSelectButton", true);
+		addEditorButton("icon_knoten.png", "Knoten hinzufügen ALT+2", "knotenButton");
+		addEditorButton("icon_kanten_select.png", "Kante auswählen ALT+3", "kantenSelectButton");
+		addEditorButton("icon_kanten.png", "Kante hinzufügen ALT+4", "kantenButton");
+		addEditorButton("icon_knoten_zusammen.png", "Knoten zusammenlegen ALT+5", "knotenZusammenButton");
+		addEditorButton("icon_knoten_pos.png", "Breitensuche ALT+6", "knotenPosButton");
 
 		slider = new JSlider(JSlider.VERTICAL, 25, 100, 65);
 		slider.setMajorTickSpacing(25);
@@ -59,7 +59,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 	private void addEditorButton(String iconPath, String tooltip, String actionCommand, boolean selected) {
 		try {
 			EditorButton knotenButton = new EditorButton(
-					new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
+					new ImageIcon(ImageIO.read(getClass().getResource("/" + iconPath))));
 
 			knotenButton.setBounds(2, yMod, 48, 48);
 			knotenButton.setBorderPainted(false);

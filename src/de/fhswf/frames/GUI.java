@@ -50,7 +50,7 @@ public class GUI extends JFrame {
 		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width,
 				size.height + 50);
 		try {
-			setIconImage(ImageIO.read(getClass().getResource("..\\resources\\icon_main_2.png")));
+			setIconImage(ImageIO.read(getClass().getResource("/icon_main_2.png")));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
