@@ -156,7 +156,7 @@ public class MenuManager implements ActionListener {
 			guiInstance.eM.edPanel.setBackground(t.mainColor);
 			guiInstance.k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
-			openNewFrame(null);
+			openNewFrame(new Graph(""));
 		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
 			guiInstance.dispose();
 		} else if (e.getActionCommand().equalsIgnoreCase("reset")) {

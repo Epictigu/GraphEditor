@@ -2,6 +2,7 @@ package de.fhswf.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -31,13 +32,13 @@ public class EditorManager implements ActionListener, ChangeListener {
 		edPanel.setBackground(instance.k.mainColor);
 		instance.add(edPanel);
 
-		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben", "knotenSelectButton", true);
-		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen", "knotenButton");
-		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen", "kantenSelectButton");
-		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen", "kantenButton");
-		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen", "knotenZusammenButton");
-		addEditorButton("resources/icon_knoten_pos.png", "Breitensuche", "knotenPosButton");
-		
+		addEditorButton("resources/icon_knoten_select.png", "Knoten verschieben ALT+1", "knotenSelectButton", true);
+		addEditorButton("resources/icon_knoten.png", "Knoten hinzufügen ALT+2", "knotenButton");
+		addEditorButton("resources/icon_kanten_select.png", "Kante auswählen ALT+3", "kantenSelectButton");
+		addEditorButton("resources/icon_kanten.png", "Kante hinzufügen ALT+4", "kantenButton");
+		addEditorButton("resources/icon_knoten_zusammen.png", "Knoten zusammenlegen ALT+5", "knotenZusammenButton");
+		addEditorButton("resources/icon_knoten_pos.png", "Breitensuche ALT+6", "knotenPosButton");
+
 		slider = new JSlider(JSlider.VERTICAL, 25, 100, 65);
 		slider.setMajorTickSpacing(25);
 		slider.setMinorTickSpacing(5);
@@ -59,7 +60,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 		try {
 			EditorButton knotenButton = new EditorButton(
 					new ImageIcon(ImageIO.read(getClass().getResource("..\\" + iconPath))));
-			
+
 			knotenButton.setBounds(2, yMod, 48, 48);
 			knotenButton.setBorderPainted(false);
 			knotenButton.setFocusPainted(false);
@@ -67,6 +68,27 @@ public class EditorManager implements ActionListener, ChangeListener {
 			knotenButton.setToolTipText(tooltip);
 			knotenButton.addActionListener(this);
 			knotenButton.setActionCommand(actionCommand);
+
+			switch (actionCommand) {
+			case "knotenSelectButton":
+				knotenButton.setMnemonic(KeyEvent.VK_1);
+				break;
+			case "knotenButton":
+				knotenButton.setMnemonic(KeyEvent.VK_2);
+				break;
+			case "kantenSelectButton":
+				knotenButton.setMnemonic(KeyEvent.VK_3);
+				break;
+			case "kantenButton":
+				knotenButton.setMnemonic(KeyEvent.VK_4);
+				break;
+			case "knotenZusammenButton":
+				knotenButton.setMnemonic(KeyEvent.VK_5);
+				break;
+			case "knotenPosButton":
+				knotenButton.setMnemonic(KeyEvent.VK_6);
+				break;
+			}
 
 			if (selected) {
 				knotenButton.setSelected(true);
@@ -92,6 +114,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getActionCommand().equalsIgnoreCase("knotenButton")) {
 			changeSelectedEditorButton(e.getSource());
 			guiInstance.k.eM = EditorMode.AddKnoten;
@@ -114,7 +137,6 @@ public class EditorManager implements ActionListener, ChangeListener {
 		}
 		guiInstance.k.resetSelected();
 	}
-	
 
 	@Override
 	public void stateChanged(ChangeEvent e) {

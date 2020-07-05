@@ -1,5 +1,7 @@
 package de.fhswf.manager;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,10 +11,11 @@ import java.util.Scanner;
 
 import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
+import de.fhswf.utils.KnotenType;
 
 public class FileManager {
 
-	public static Graph readFileScanner(String path) {
+	public static Graph readFileScanner(String path, String pathGDIP) {
 		Graph graph = new Graph(path);
 		try {
 			// GDI
@@ -27,14 +30,24 @@ public class FileManager {
 			scannerGDI.close();
 
 			// GDIP
-			File fileGDIP = new File(path + "p");
-			Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
-			scannerGDI.useLocale(loc);
-			while (scannerGDIP.hasNextLine()) {
-				String line = scannerGDIP.nextLine();
-				decodeGDIP(line, graph);
+			File fileGDIP = new File(pathGDIP);
+			if (fileGDIP.exists()) {
+				Scanner scannerGDIP = new Scanner(fileGDIP, "UTF-8");
+				scannerGDI.useLocale(loc);
+
+				int knotSize = Integer.parseInt(scannerGDIP.nextLine());
+				graph.kSize = knotSize;
+				FrameSize windowSize = FrameSize.valueOf(scannerGDIP.nextLine());
+				graph.fSize = windowSize;
+
+				int index = 0;
+				while (scannerGDIP.hasNextLine()) {
+					String line = scannerGDIP.nextLine();
+					decodeGDIP(line, graph, index);
+					index++;
+				}
+				scannerGDIP.close();
 			}
-			scannerGDIP.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -142,11 +155,30 @@ public class FileManager {
 		}
 	}
 
-	// TODO
-	private static void decodeGDIP(String line, Graph graph) {
+	private static void decodeGDIP(String line, Graph graph, int knotIndex) {
 		if (!line.isEmpty()) {
 			String[] array = line.split(" ");
-
+			// X Koordinate
+			int x = Integer.parseInt(array[0]);
+			// Y Koordinate
+			int y = Integer.parseInt(array[1]);
+			graph.knotList.get(knotIndex).pos = new Point(x, y);
+			// Knotengroeﬂe
+			int sizeKnot = Integer.parseInt(array[2]);
+			graph.knotList.get(knotIndex).size = sizeKnot;
+			// KnotenType
+			KnotenType knotenType = KnotenType.valueOf(array[3]);
+			graph.knotList.get(knotIndex).knotType = knotenType;
+			// Knotenfarbe
+			if (!array[4].equals("Default")) {
+				Color knotColor = new Color(Integer.parseInt(array[4]));
+				graph.knotList.get(knotIndex).main = knotColor;
+			}
+			// Fontfarbe
+			if (!array[5].equals("Default")) {
+				Color fontColor = new Color(Integer.parseInt(array[5]));
+				graph.knotList.get(knotIndex).font = fontColor;
+			}
 		}
 	}
 
