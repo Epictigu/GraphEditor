@@ -171,18 +171,18 @@ public class GraphPainter extends JPanel {
 		
 		if (graph == null) {
 			g2d.setFont(new Font("Serif", Font.BOLD, 20));
-			int width = g2d.getFontMetrics().stringWidth("Kein Graph ausgewählt!");
-			g2d.drawString("Kein Graph ausgewählt!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
+			int width = g2d.getFontMetrics().stringWidth("Kein Graph ausgewÃ¤hlt!");
+			g2d.drawString("Kein Graph ausgewÃ¤hlt!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
 			return;
 		}
 
 		if (graph.getAmountKnots() > fSize.maxKnoten) {
 			g2d.setFont(new Font("Serif", Font.BOLD, 20));
-			int width = g2d.getFontMetrics().stringWidth("Der gewählte Graph ist zu groß!");
-			g2d.drawString("Der gewählte Graph ist zu groß!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
+			int width = g2d.getFontMetrics().stringWidth("Der gewÃ¤hlte Graph ist zu groÃŸ!");
+			g2d.drawString("Der gewÃ¤hlte Graph ist zu groÃŸ!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
 			
-			int width2 = g2d.getFontMetrics().stringWidth("Bitte wenn möglich größeres Fenster öffnen.");
-			g2d.drawString("Bitte wenn möglich größeres Fenster öffnen.", getWidth() / 2 - (width2 / 2), getHeight() / 2 + 10);
+			int width2 = g2d.getFontMetrics().stringWidth("Bitte wenn mÃ¶glich grÃ¶ÃŸeres Fenster Ã¶ffnen.");
+			g2d.drawString("Bitte wenn mÃ¶glich grÃ¶ÃŸeres Fenster Ã¶ffnen.", getWidth() / 2 - (width2 / 2), getHeight() / 2 + 10);
 			return;
 		}
 		
@@ -228,7 +228,7 @@ public class GraphPainter extends JPanel {
 					yMod = 10;
 				}
 				
-				g2d.drawString("" + k.länge,
+				g2d.drawString("" + k.lÃ¤nge,
 						k.k1.pos.x + xDis + xMod,
 						k.k1.pos.y + yDis + yMod);
 			}
@@ -265,6 +265,8 @@ public class GraphPainter extends JPanel {
 				if(bfs != null) {
 					if(bfs.containsKey(k)) {
 						knotName = bfs.get(k) + "";
+						if(knotName.equalsIgnoreCase("-1"))
+							knotName = "âˆž";
 					}
 				}
 			}
