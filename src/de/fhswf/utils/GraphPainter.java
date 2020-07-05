@@ -41,6 +41,7 @@ public class GraphPainter extends JPanel {
 		addMouseListener(gMA);
 		addMouseMotionListener(gMA);
 		this.fSize = fsize;
+		this.size = kSize;
 		this.graph = new Graph(null);
 	}
 

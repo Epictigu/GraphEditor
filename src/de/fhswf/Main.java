@@ -12,15 +12,18 @@ public class Main {
 	public static List<GUI> guiList = new ArrayList<GUI>();
 
 	public static void main(String[] args) {
-		openNewFrame(null);
+		Graph g = new Graph("");
+		g.fSize = FrameSize.Small;
+		g.kSize = 65;
+		openNewFrame(g);
 	}
 
 	public static void openNewFrame(Graph g) {
-		openNewFrame(g, FrameSize.Small, 65);
+		openNewFrame(g, g.fSize, g.kSize);
 	}
 
 	public static void openNewFrame(Graph g, FrameSize size) {
-		openNewFrame(g, size, 65);
+		openNewFrame(g, size, g.kSize);
 	}
 	
 	public static void openNewFrame(Graph g, FrameSize size, int kSize) {

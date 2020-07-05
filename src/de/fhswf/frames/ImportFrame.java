@@ -4,6 +4,8 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,12 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+
+import de.fhswf.Main;
+import de.fhswf.manager.FileManager;
 import de.fhswf.utils.FrameSize;
+import de.fhswf.utils.Graph;
+
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -29,6 +36,10 @@ public class ImportFrame extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 2327052766844304740L;
 	private JTextField gdiPath;
 	private JTextField gdipPath;
+	private JCheckBox gdipCheck;
+	private JComboBox<Object> frameSizeB;
+	private JSpinner knotSizeS;
+	public boolean successful = false;
 	
 	
 	public ImportFrame() {
@@ -88,10 +99,9 @@ public class ImportFrame extends JDialog implements ActionListener{
 		frameSizeL.setBounds(10, 75, 76, 17);
 		getContentPane().add(frameSizeL);
 		
-		JComboBox<Object> frameSizeB = new JComboBox<Object>();
+		frameSizeB = new JComboBox<Object>();
 		frameSizeB.setModel((ComboBoxModel<Object>) new DefaultComboBoxModel<Object>(FrameSize.values()));
 		frameSizeB.setSelectedIndex(0);
-		frameSizeB.setEnabled(false);
 		frameSizeB.setBounds(88, 74, 61, 20);
 		getContentPane().add(frameSizeB);
 		
@@ -100,10 +110,9 @@ public class ImportFrame extends JDialog implements ActionListener{
 		knotSizeL.setBounds(10, 100, 84, 17);
 		getContentPane().add(knotSizeL);
 		
-		JSpinner knotSizeS = new JSpinner();
+		knotSizeS = new JSpinner();
 		knotSizeS.setModel(new SpinnerNumberModel(65, 25, 100, 1));
 		knotSizeS.setBounds(92, 99, 46, 20);
-		knotSizeS.setEnabled(false);
 		getContentPane().add(knotSizeS);
 		
 		JLabel knotSizePL = new JLabel("(In Pixeln | 25 - 100)");
@@ -117,10 +126,9 @@ public class ImportFrame extends JDialog implements ActionListener{
 		importButton.setActionCommand("import");
 		getContentPane().add(importButton);
 		
-		JCheckBox gdipCheck = new JCheckBox("");
+		gdipCheck = new JCheckBox("");
 		gdipCheck.setBounds(243, 35, 20, 25);
 		gdipCheck.setToolTipText("Aktiviert/Deaktiviert die Nutzung der \".gdip\"-Datei.");
-		gdipCheck.setSelected(true);
 		gdipCheck.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -151,6 +159,13 @@ public class ImportFrame extends JDialog implements ActionListener{
 				if (!path.toLowerCase().endsWith(".gdi"))
 					return;
 				gdiPath.setText(path);
+				File f = new File(path + "p");
+				if(f.exists()) {
+					gdipPath.setText(f.getPath());
+					gdipCheck.setSelected(true);
+					frameSizeB.setEnabled(false);
+					knotSizeS.setEnabled(false);
+				}
 			}
 		} else if(e.getActionCommand().equalsIgnoreCase("gdipSel")) {
 			JFileChooser fc = new JFileChooser();
@@ -166,6 +181,28 @@ public class ImportFrame extends JDialog implements ActionListener{
 					return;
 				gdipPath.setText(path);
 			}
+		} else if(e.getActionCommand().equalsIgnoreCase("import")) {
+			if(gdiPath.getText().equalsIgnoreCase("")) {
+				JOptionPane.showMessageDialog(null, "Wähle zuerst eine \".gdi\"-Datei aus.");
+				return;
+			}
+			if(!(new File(gdiPath.getText()).exists())) {
+				JOptionPane.showMessageDialog(null, "Ungültige Datei ausgewählt.");
+				return;
+			}
+			Graph g = FileManager.readFileScanner(gdiPath.getText());
+			g.fSize = Enum.valueOf(FrameSize.class, frameSizeB.getSelectedItem() + "");
+			try {
+				int i = (Integer) knotSizeS.getValue();
+				if(i < 25) i = 25; if(i > 100) i = 100;
+				g.kSize = i;
+			} catch(Exception e2) {
+				e2.printStackTrace();
+				g.kSize = 65;
+			}
+			Main.openNewFrame(g);
+			successful = true;
+			dispose();
 		}
 	}
 }

@@ -134,28 +134,14 @@ public class MenuManager implements ActionListener {
 		}
 	}
 
-	private void openGraph(String path) {
-		Graph g = FileManager.readFileScanner(path);
-
-		if (guiInstance.k.graph != null) {
-			int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
-			if (result == 2)
-				return;
-			if (result == 0) {
-				openNewFrame(g);
-				return;
-			}
-		}
-
-		guiInstance.setTitle("Graphen-Editor - " + g.getPath());
-		guiInstance.k.setFile(g);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equalsIgnoreCase("selectFile")) {
-			ImportFrame iF = new ImportFrame();
-
+			if (new ImportFrame().successful) {
+				if (guiInstance.k.graph.knotList.isEmpty() && guiInstance.k.graph.edgeList.isEmpty()) {
+					guiInstance.dispose();
+				}
+			}
 		} else if (e.getActionCommand().startsWith("theme")) {
 			String theme = e.getActionCommand().split("_")[1];
 			Themes t = Enum.valueOf(Themes.class, theme);
@@ -219,15 +205,16 @@ public class MenuManager implements ActionListener {
 				guiInstance.k.graph.setPath(path);
 				FileManager.writeFile(path, guiInstance.k.graph, guiInstance.k.size, guiInstance.frameSize);
 			}
-		} else if(e.getActionCommand().equalsIgnoreCase("dataTable")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("dataTable")) {
 			DataTable dt = new DataTable();
-			for(int i = 0; i < guiInstance.k.graph.knotList.size(); i++) {
+			for (int i = 0; i < guiInstance.k.graph.knotList.size(); i++) {
 				Knoten k = guiInstance.k.graph.knotList.get(i);
 				dt.addRowKnoten((i + 1) + "", k.knotName);
 			}
-			for(int i = 0; i < guiInstance.k.graph.edgeList.size(); i++) {
+			for (int i = 0; i < guiInstance.k.graph.edgeList.size(); i++) {
 				Kanten k = guiInstance.k.graph.edgeList.get(i);
-				dt.addRowKanten((i + 1) + "", k.länge + "", (guiInstance.k.graph.getKnotPosInList(k.k1) + 1) + " - " + (guiInstance.k.graph.getKnotPosInList(k.k2) + 1));
+				dt.addRowKanten((i + 1) + "", k.länge + "", (guiInstance.k.graph.getKnotPosInList(k.k1) + 1) + " - "
+						+ (guiInstance.k.graph.getKnotPosInList(k.k2) + 1));
 			}
 		}
 	}
