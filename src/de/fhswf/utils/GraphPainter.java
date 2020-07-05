@@ -233,7 +233,7 @@ public class GraphPainter extends JPanel {
 					yMod = 10;
 				}
 
-				g2d.drawString("" + k.l‰nge, k.k1.pos.x + xDis + xMod, k.k1.pos.y + yDis + yMod);
+				g2d.drawString("" + k.l√§nge, k.k1.pos.x + xDis + xMod, k.k1.pos.y + yDis + yMod);
 			}
 		}
 		int cP = 0;
