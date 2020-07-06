@@ -178,17 +178,6 @@ public class GraphPainter extends JPanel {
 			return;
 		}
 
-		if (graph.getAmountKnots() > fSize.maxKnoten) {
-			g2d.setFont(new Font("Serif", Font.BOLD, 20));
-			int width = g2d.getFontMetrics().stringWidth("Der gewählte Graph ist zu groß!");
-			g2d.drawString("Der gewählte Graph ist zu groß!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
-
-			int width2 = g2d.getFontMetrics().stringWidth("Bitte wenn möglich größeres Fenster öffnen.");
-			g2d.drawString("Bitte wenn möglich größeres Fenster öffnen.", getWidth() / 2 - (width2 / 2),
-					getHeight() / 2 + 10);
-			return;
-		}
-
 		double sizeMod = (double) (fSize.maxKnoten) / 30.0;
 		g2d.setColor(gridColor);
 		for (int i = 1; i < 12 * sizeMod; i++) {
