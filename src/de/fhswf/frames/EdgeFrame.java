@@ -41,7 +41,7 @@ public class EdgeFrame extends JDialog implements ActionListener{
 		idL.setBounds(28, 10, 200, 25);
 		add(idL);
 		
-		JLabel nameL = new JLabel("L�nge: ");
+		JLabel nameL = new JLabel("Länge: ");
 		nameL.setFont(new Font(Font.DIALOG, Font.PLAIN, 14));
 		nameL.setBounds(28, 35, 200, 25);
 		add(nameL);

@@ -47,8 +47,8 @@ public class GUI extends JFrame {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width,
-				size.height + 50);
+		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width + 8,
+				size.height + 60);
 		try {
 			setIconImage(ImageIO.read(getClass().getResource("/icon_main_2.png")));
 		} catch (IOException e1) {

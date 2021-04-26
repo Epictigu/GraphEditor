@@ -27,7 +27,7 @@ public class EditorManager implements ActionListener, ChangeListener {
 		this.guiInstance = instance;
 
 		edPanel = new EditorPanel();
-		edPanel.setBounds(instance.getWidth() - 57, 0, 50, instance.getHeight() - 50);
+		edPanel.setBounds(instance.getWidth() - 65, 0, 50, instance.getHeight() - 50);
 		edPanel.setLayout(null);
 		edPanel.setBackground(instance.k.mainColor);
 		instance.add(edPanel);
