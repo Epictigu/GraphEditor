@@ -1,6 +1,6 @@
 # GraphEditor
 [![Latest Release](https://img.shields.io/github/release/Epictigu/GraphEditor?label=download)](https://github.com/Epictigu/GraphEditor/releases/)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 Der GraphEditor ist eine Erweiterung des GraphVisualization-Programmes.
 
